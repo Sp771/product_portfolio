@@ -6,7 +6,7 @@ export default function MoreStories({ posts }) {
       <h2 className="mb-4 text-3xl md:text-4xl leading-tight font-bold">
         <a
           href={`/projects`}
-          className="hover:text-success duration-200 transition-colors p-4 block"
+          className="p-4 block text-[#4056a1] hover:text-[#d79922] transition duration-200"
         >
           More Projects
         </a>

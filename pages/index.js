@@ -19,7 +19,7 @@ export default function Index({ allPosts }) {
         <Container>
           <Intro />
         </Container>
-        <div className="bg-sky-50 pt-16 pb-16">
+        <div className="pt-16 pb-16" style={{ backgroundColor: '#f2ecd8', color: '#D64E00' }}>
           <Container>
             {heroPost && (
               <HeroPost

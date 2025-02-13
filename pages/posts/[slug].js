@@ -26,7 +26,7 @@ export default function Post({ post, morePosts, preview }) {
         ) : (
           <>
             <article className="mb-16">
-              <div className="bg-sky-50 pt-4 pb-2">
+              <div className="pt-4 pb-2" style={{ backgroundColor: '#f2ecd8' }}>
                 <Container>
                   <Head>
                     <title>
@@ -36,7 +36,6 @@ export default function Post({ post, morePosts, preview }) {
                   </Head>
                   <PostHeader
                     title={post.title}
-                    coverImage={post.coverImage}
                     date={post.date}
                     author={post.author}
                   />

@@ -11,14 +11,14 @@ const About = () => {
                 <Container>
                   <Header />
                 </Container>
-                <div className="bg-sky-50 pt-16 pb-16">
+                <div className="pt-16 pb-16" style={{ backgroundColor: '#f2ecd8' }}>
                   <Container>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
                       <div>
                         <Image title={"lisafeets"} src={"/assets/about/annie.svg"} height={400} width={400} />
                       </div>
                       <div className="md:pr-8 md:col-span-2">
-                        <h1 className="text-2xl md:text-3xl font-bold leading-tight mb-4">
+                        <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4" style={{ color: '#4056a1' }}>
                           Hi! Im Sydney...
                         </h1>
                         <h2 className="text-xl font-semibold text-slate-500 mb-12">

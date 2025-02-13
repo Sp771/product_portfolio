@@ -12,25 +12,25 @@ export default function Navigation() {
                     <li>
                         <a
                         href={`/projects`}
-                        className="hover:text-success duration-200 transition-colors p-4 block"
+                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
                         >
                         Projects
                         </a>
                     </li>
                     <li>
                         <a
-                        href={`https://medium.com/`}
-                        className="hover:text-success duration-200 transition-colors p-4 block"
+                        href={`/about`}
+                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
                         >
-                        Blog
+                        About
                         </a>
                     </li>
                     <li>
                         <a
-                        href={`/about`}
-                        className="hover:text-success duration-200 transition-colors p-4 block"
+                        href={`https://www.linkedin.com/in/sydneympittman/`}
+                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
                         >
-                        About
+                        LinkedIn
                         </a>
                     </li>
                 </ul>

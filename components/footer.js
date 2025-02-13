@@ -16,7 +16,8 @@ export default function Footer() {
               <img alt="linkedin logo" src={"/icons/mail-fill.svg"} height={45} width={45} />
               <span className="invisible">Email</span>
             </a>
-            <a className="mx-4" href="https://www.linkedin.com/">
+            <a className="mx-4" href="https://www.linkedin.com/in/sydneympittman/
+            // ">
                 <img alt="linkedin logo" src={"/icons/linkedin-box-fill.svg"} height={45} width={45} />
                 <span className="invisible">LinkedIn</span>
             </a>
