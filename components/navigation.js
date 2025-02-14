@@ -11,7 +11,7 @@ export default function Navigation() {
                 <ul className="flex justify-end">
                 <li>
                         <a
-                        href={`/`}
+                        href={`/home`}
                         className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
                         >
                         Home

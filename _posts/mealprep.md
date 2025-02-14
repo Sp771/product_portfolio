@@ -2,9 +2,9 @@
 title: 'Event Catalog/Event Manager'
 excerpt: 'The Event Catalog and Event Manager module, built within a Member Portal, allows association members to browse and purchase events directly from the portal. Members can view upcoming and past events, and manage event purchases, including adding guests and making hotel and preference selections within their cart. The system also features a group registration option, enabling designated users to register multiple people from their organization.'
 coverImage: '/assets/posts/mealprep/cover.svg'
-date: '2022-06-01T05:35:07.322Z'
+date: '2024-03-01T05:35:07.322Z'
 author:
-  name: Annie Apple
+  name: Sydney Pittman
   picture: '/assets/blog/authors/annie.svg'
 ogImage:
   url: '/assets/posts/mealprep/cover.svg'
