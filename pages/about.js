@@ -7,6 +7,9 @@ import Header from '../components/header'
 const About = () => {
     return (
             <>
+            <Head>
+  <title>Sydney Pittman | About</title>
+</Head>
               <Layout>
                 <Container>
                   <Header />
