@@ -12,7 +12,7 @@ export default function Index({ allPosts }) {
     <>
       <Layout>
         <Head>
-          <title>Annie Apple's Product Portfolio</title>
+          <title>Sydney Pittman's Product Portfolio</title>
         </Head>
         <Container>
           <Header />

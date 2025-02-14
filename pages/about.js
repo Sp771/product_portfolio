@@ -40,10 +40,36 @@ When I’m not shaping the future of products, you’ll find me planning my next
                     </div>
                   </Container>
               </div>
-              </Layout>
-            </>
-        //   )
-
+{/* New Section: Clickable Title and Image */}
+<div className="pt-16 pb-16" style={{ backgroundColor: '#ffffff' }}>
+  <Container>
+    <div className="flex items-center justify-center md:justify-start">
+      {/* Title */}
+      <div>
+        <h2 className="text-3xl font-bold text-center md:text-right text-[#4056a1] mb-0 md:mr-8">
+          <a href="/pepper" className="hover:text-[#d79922] transition duration-200">
+            Pepper Pittman: Small Legs, Big Adventures
+          </a>
+        </h2>
+        {/* Subtitle */}
+        <p className="text-lg text-slate-500 text-center md:text-right mt-2 md:ml-8">
+        Click here if you're curious to see how her small but mighty legs power her through every adventure, no matter how big!
+        </p>
+      </div>
+      {/* Image */}
+      <div>
+        <Image 
+          src="/assets/pepper/pepper.svg" 
+          alt="pepper pic" 
+          width={300} 
+          height={300} 
+        />
+      </div>
+    </div>
+  </Container>
+</div>
+            </Layout>
+        </>
     );
 }
 

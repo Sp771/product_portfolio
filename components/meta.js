@@ -7,19 +7,19 @@ export default function Meta() {
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href="/favicons/apple-touch-icon.png"
+        href="/favicons/favicon.ico"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href="/favicons/favicon-32x32.png"
+        href="/favicons/favicon.ico"
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href="/favicons/favicon-16x16.png"
+        href="/favicons/favicon.ico"
       />
       <link rel="manifest" href="/favicons/site.webmanifest" />
       <link
@@ -34,7 +34,7 @@ export default function Meta() {
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <meta
         name="description"
-        content={`Annie Apple's product portfolio and blog.`}
+        content={`Sydney Pittman's Product Portfolio.`}
       />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} />
     </Head>
