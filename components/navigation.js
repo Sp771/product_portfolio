@@ -1,6 +1,6 @@
 import Container from './container'
 
-const link = 'px-3 py-2 text-white/85 hover:text-white transition-colors duration-150'
+const link = 'px-3 py-2 text-white/80 hover:text-white transition-colors duration-150'
 
 export default function Navigation() {
   return (
