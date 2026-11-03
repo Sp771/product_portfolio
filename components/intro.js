@@ -21,17 +21,19 @@ export default function Intro() {
                   height={56}
                   className="h-14 w-14 rounded-full"
                 />
-                <p className="text-lg text-white/80">Hi, I’m Sydney, an AI-native product leader.</p>
+                <p className="text-lg text-white/80">Hi, I’m Sydney Pittman.</p>
               </div>
 
               <h1 className="font-display font-extrabold text-5xl md:text-6xl xl:text-7xl leading-[1.02] mb-6">
-                I turn product ideas into working AI prototypes.
+                Product leader with an AI-first mindset.
               </h1>
 
               <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-9 max-w-xl">
-                Product Owner of MemberPlex with 6 years in Agile product development. I build GenAI into
-                both the product and the process, and give teams something they can click through before
-                any production code is written.
+                For 6 years I’ve turned complex requirements into products people actually use. Today I own
+                MemberPlex, a member portal platform for not-for-profits, and lead a global development team
+                from roadmap to release. I treat AI as part of how great products get built: GenAI features
+                inside the product, AI-assisted backlog, QA and release work behind it, and clickable
+                prototypes that let everyone see an idea before we build it.
               </p>
 
               <div className="flex flex-wrap gap-4">
