@@ -19,7 +19,7 @@ export default function Index({ allPosts }) {
         </Head>
         <Intro />
 
-        <section className="py-20" aria-labelledby="prototypes-heading">
+        <section className="py-20 bg-skytint" aria-labelledby="prototypes-heading">
           <Container>
             <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
               <div className="max-w-2xl">
@@ -47,9 +47,9 @@ export default function Index({ allPosts }) {
                   <div className="mt-5 flex items-start justify-between gap-4">
                     <div>
                       <h3 className="font-display font-extrabold text-2xl text-ink group-hover:text-brand">{p.title}</h3>
-                      <p className="text-slate-600">{p.tagline}</p>
+                      <p className="text-slate-700">{p.tagline}</p>
                     </div>
-                    <span className="flex-none rounded-full bg-cream text-ink text-sm font-bold px-4 py-2 group-hover:bg-ink group-hover:text-white transition-colors duration-150">
+                    <span className="flex-none rounded-full bg-skydeep text-white text-sm font-bold px-4 py-2 group-hover:bg-ink group-hover:text-white transition-colors duration-150">
                       Try it live
                     </span>
                   </div>

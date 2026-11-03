@@ -8,7 +8,7 @@ function Bullets({ items }) {
     <ul className="space-y-2.5 text-slate-700 text-lg leading-relaxed">
       {items.map((b) => (
         <li key={b} className="flex gap-3">
-          <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 rounded-full flex-none bg-flame" />
+          <span aria-hidden="true" className="mt-3 h-1.5 w-1.5 rounded-full flex-none bg-sky" />
           <span>{b}</span>
         </li>
       ))}
@@ -59,10 +59,10 @@ export default function Resume() {
 
             <section>
               <h2 className="font-display font-extrabold text-ink text-3xl mb-8">Experience</h2>
-              <ol className="border-l-2 border-cream">
+              <ol className="border-l-2 border-sky">
                 {R.experience.map((job) => (
                   <li key={job.role + job.company} className="relative pl-8 pb-12 last:pb-0">
-                    <span aria-hidden="true" className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-sky ring-4 ring-white" />
+                    <span aria-hidden="true" className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-orange ring-4 ring-white" />
                     <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-1">
                       <h3 className="font-display font-extrabold text-ink text-2xl">{job.role}</h3>
                       <span className="text-slate-500 font-medium">{job.dates}</span>
@@ -90,7 +90,7 @@ export default function Resume() {
                 <SideHeading>{group}</SideHeading>
                 <ul className="flex flex-wrap gap-2">
                   {list.map((s) => (
-                    <li key={s} className="rounded-full bg-mist text-ink font-medium px-3 py-1.5">{s}</li>
+                    <li key={s} className="rounded-full bg-skytint text-ink font-medium px-3 py-1.5">{s}</li>
                   ))}
                 </ul>
               </section>

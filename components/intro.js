@@ -55,6 +55,7 @@ export default function Intro() {
 
             <a href="/prototypes" aria-label="See all AI prototypes" className="lg:col-span-6 block">
               <div className="fan relative mx-auto max-w-xl lg:max-w-none h-[300px] sm:h-[380px] lg:h-[440px]">
+                <div aria-hidden="true" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[115%] aspect-square rounded-full bg-sky" />
                 <WindowFrame
                   src="/assets/prototypes/impersonation-mode.jpg"
                   alt=""

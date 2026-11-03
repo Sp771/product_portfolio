@@ -26,7 +26,7 @@ export default function Post({ post, morePosts, preview }) {
         ) : (
           <>
             <article className="mb-16">
-              <div className="pt-4 pb-2 bg-mist">
+              <div className="pt-4 pb-2 bg-skytint">
                 <Container>
                   <Head>
                     <title>

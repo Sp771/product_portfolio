@@ -48,7 +48,7 @@ function PrototypeCard({ p, flip }) {
         <ul className="text-lg text-slate-600 mb-7 space-y-2">
           {p.points.map((pt) => (
             <li key={pt} className="flex gap-3">
-              <span aria-hidden="true" className="mt-2.5 h-2 w-2 rounded-full flex-none bg-flame" />
+              <span aria-hidden="true" className="mt-2.5 h-2 w-2 rounded-full flex-none bg-sky" />
               <span>{pt}</span>
             </li>
           ))}

@@ -11,6 +11,7 @@ module.exports = {
         olive: '#998731',
         sky: '#5FA8C2',
         skytint: '#DCEEF4',
+        skydeep: '#367489',
         mist: '#FBF0D6',
         'text-color': '#21243D',
         'accent-1': '#FF6464',
