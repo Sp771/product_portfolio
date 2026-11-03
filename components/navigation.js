@@ -27,6 +27,14 @@ export default function Navigation() {
                     </li>
                     <li>
                         <a
+                        href={`/prototypes`}
+                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
+                        >
+                        AI Prototypes
+                        </a>
+                    </li>
+                    <li>
+                        <a
                         href={`/about`}
                         className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
                         >

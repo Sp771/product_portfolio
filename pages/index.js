@@ -34,6 +34,37 @@ export default function Index({ allPosts }) {
             </Container>
           </div>
           <Container>
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center pt-16">
+              <div className="md:col-span-2">
+                <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
+                  <a href="/prototypes" className="text-[#4056a1] hover:text-[#94B143] transition duration-200">
+                    AI Prototypes
+                  </a>
+                </h2>
+                <p className="text-lg text-slate-500 mb-6">
+                  Working, clickable prototypes I built with Claude, from an AI networking coach to a
+                  conference session planner. Open any of them and try them yourself.
+                </p>
+                <a
+                  href="/prototypes"
+                  className="bg-[#D64E00] border border-[#D64E00] text-white font-bold py-3 px-8 inline-block duration-200 transition-colors hover:bg-white hover:text-[#D64E00]"
+                >
+                  See the prototypes
+                </a>
+              </div>
+              <a href="/prototypes" aria-label="See the AI prototypes" className="block">
+                <img
+                  src="/assets/prototypes/tender-messages.jpg"
+                  alt="Tender Connect prototype with the Tender Coach AI assistant"
+                  width={1200}
+                  height={750}
+                  className="w-full h-auto rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200"
+                  loading="lazy"
+                />
+              </a>
+            </section>
+          </Container>
+          <Container>
             <div className="md:mt-16">
               {morePosts.length > 0 && <MoreStories posts={morePosts} />}
             </div>

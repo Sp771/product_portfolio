@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Program Budget Management · MemberPlex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#4B2C82;
+    --purple-dark:#3A2166;
+    --purple-light:#F1ECFA;
+    --orange:#E8631C;
+    --orange-dark:#C94F12;
+    --ink:#1F2430;
+    --sub:#6B7280;
+    --line:#E5E7EB;
+    --line-soft:#EEF0F2;
+    --card:#FFFFFF;
+    --page:#FAFAFB;
+    --input-bg:#FFFDE9;
+    --input-border:#E9DE9C;
+    --readonly-bg:#F3F4F6;
+    --readonly-ink:#374151;
+    --danger:#B42318;
+  }
+  *{box-sizing:border-box;}
+  html,body{color:var(--ink);font-size:14px;line-height:1.45;}
+  body{
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    background:var(--page);
+    color:var(--ink);
+    font-size:14px;
+    line-height:1.45;
+    padding:28px 32px 80px;
+  }
+  a.back{color:var(--purple);font-size:13px;text-decoration:none;font-weight:600;}
+  a.back:hover{text-decoration:underline;}
+  .topline{display:flex;justify-content:space-between;align-items:flex-start;margin-top:14px;}
+  h1{color:var(--purple);font-size:24px;margin:0;}
+  .badge{
+    background:#9AA0AC;color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;
+    padding:6px 14px;border-radius:3px;
+  }
+  p.lede{color:var(--sub);max-width:900px;margin:8px 0 24px;font-size:13.5px;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    box-shadow:0 1px 2px rgba(16,24,40,.04);
+    padding:22px 24px;
+    margin-bottom:20px;
+  }
+  .card h2{color:var(--purple);font-size:17px;margin:0 0 4px;}
+  .card p.help{color:var(--sub);font-size:13px;margin:0 0 14px;max-width:820px;}
+
+  label.field-label{
+    display:block;font-size:11px;font-weight:700;color:var(--purple);
+    letter-spacing:.02em;margin-bottom:6px;text-transform:none;
+  }
+  label.field-label .req{color:var(--orange);}
+
+  input.program-input, select.program-input{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:4px;
+    font-size:14px;color:var(--ink);background:#fff;
+  }
+  input.program-input:focus, select.program-input:focus{outline:2px solid var(--purple-light);border-color:var(--purple);}
+
+  .btn{
+    border:none;border-radius:4px;padding:9px 16px;font-size:13.5px;font-weight:600;
+    cursor:pointer;display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn-purple{background:var(--purple);color:#fff;}
+  .btn-purple:hover{background:var(--purple-dark);}
+  .btn-outline{background:#fff;color:var(--purple);border:1px solid var(--purple);}
+  .btn-outline:hover{background:var(--purple-light);}
+  .btn-orange{background:var(--orange);color:#fff;}
+  .btn-orange:hover{background:var(--orange-dark);}
+  .btn-ghost{background:transparent;color:var(--sub);border:1px solid var(--line);}
+  .btn-ghost:hover{background:var(--line-soft);}
+  .btn-remove{background:transparent;color:var(--danger);border:1px solid #F3C7C2;font-size:12px;padding:5px 10px;}
+  .btn-remove:hover{background:#FBEAE8;}
+  .btn-sm{font-size:12px;padding:6px 10px;}
+
+  /* Meeting card */
+  .meeting{
+    border:1px solid var(--line);border-radius:6px;margin-bottom:16px;overflow:hidden;background:#fff;
+  }
+  .meeting-head{
+    display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--purple-light);
+    border-bottom:1px solid var(--line);
+  }
+  .meeting-head .chev{cursor:pointer;font-size:12px;color:var(--purple);width:16px;flex:none;user-select:none;transition:transform .15s;}
+  .meeting-head .chev.collapsed{transform:rotate(-90deg);}
+  .meeting-head input.meeting-name{
+    flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:4px;font-size:14px;font-weight:600;
+    color:var(--purple-dark);background:#fff;
+  }
+  .meeting-head .meeting-total{font-weight:700;color:var(--purple-dark);font-size:13.5px;white-space:nowrap;}
+  .meeting-body{padding:18px;}
+  .meeting-body.collapsed{display:none;}
+
+  /* Section (Meeting Expenses / Travel / Miscellaneous) */
+  .section{border:1px solid var(--line-soft);border-radius:6px;margin-bottom:14px;}
+  .section-head{
+    display:flex;align-items:center;gap:10px;padding:11px 14px;background:#F7F5FB;cursor:pointer;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .section-head .chev{font-size:11px;color:var(--purple);width:14px;flex:none;transition:transform .15s;}
+  .section-head .chev.collapsed{transform:rotate(-90deg);}
+  .section-head .title{font-weight:700;color:var(--purple);font-size:14px;flex:1;}
+  .section-head .amt{font-weight:700;color:var(--ink);font-size:13px;}
+  .section-body{padding:14px;}
+  .section-body.collapsed{display:none;}
+
+  /* Subtable */
+  .subtable{border:1px solid var(--line);border-radius:5px;margin-bottom:12px;}
+  .subtable:last-child{margin-bottom:0;}
+  .subtable-head{
+    display:flex;align-items:center;gap:8px;padding:9px 12px;background:#fff;cursor:pointer;
+    border-bottom:1px solid var(--line);
+  }
+  .subtable-head .chev{font-size:10px;color:var(--sub);width:12px;flex:none;transition:transform .15s;}
+  .subtable-head .chev.collapsed{transform:rotate(-90deg);}
+  .subtable-head .title{font-weight:600;color:var(--ink);font-size:13.5px;flex:1;}
+  .subtable-head .amt{font-weight:700;color:var(--purple);font-size:13px;}
+  .subtable-body{padding:2px 0;}
+  .subtable-body.collapsed{display:none;}
+
+  table.rows{width:100%;border-collapse:collapse;}
+  table.rows th{
+    text-align:left;font-size:10.5px;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;
+    font-weight:700;padding:8px 12px;border-bottom:1px solid var(--line);background:#FCFCFD;
+  }
+  table.rows td{padding:6px 12px;border-bottom:1px solid var(--line-soft);vertical-align:middle;}
+  table.rows tr:last-child td{border-bottom:none;}
+  table.rows th.col-value, table.rows td.col-value{width:150px;}
+  table.rows th.col-memo, table.rows td.col-memo{width:auto;}
+  table.rows th.col-action, table.rows td.col-action{width:40px;text-align:center;}
+
+  .row-label{font-size:13px;color:var(--ink);}
+  .row-label .unit-hint{color:var(--sub);font-size:11px;}
+
+  .value-wrap{display:flex;align-items:center;background:var(--input-bg);border:1px solid var(--input-border);border-radius:4px;overflow:hidden;}
+  .value-wrap .prefix{padding:0 8px;color:var(--sub);font-size:12.5px;border-right:1px solid var(--input-border);background:#FBF6DC;}
+  .value-wrap input{
+    border:none;background:transparent;padding:7px 8px;width:100%;font-size:13px;color:var(--ink);text-align:right;
+  }
+  .value-wrap input:focus{outline:none;}
+  .value-wrap.select select{border:none;background:transparent;padding:7px 8px;width:100%;font-size:13px;color:var(--ink);}
+
+  input.memo-input{
+    width:100%;border:1px solid var(--line);border-radius:4px;padding:7px 9px;font-size:12.5px;color:var(--sub);background:#fff;
+  }
+  input.memo-input:focus{outline:none;border-color:var(--purple);color:var(--ink);}
+  input.memo-input::placeholder{color:#B7BCC5;}
+
+  input.dyn-label{
+    width:100%;border:1px solid var(--line);border-radius:4px;padding:7px 9px;font-size:13px;color:var(--ink);background:#fff;
+  }
+
+  .total-line{
+    display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:var(--readonly-bg);
+    font-weight:700;font-size:13px;color:var(--ink);
+  }
+  .subtotal-hint{padding:6px 12px 2px;font-size:11.5px;color:var(--sub);}
+
+  .add-row-btn{margin:10px 12px 12px;}
+
+  .program-summary{
+    display:flex;justify-content:flex-end;gap:32px;padding:18px 4px 8px;
+  }
+  .program-summary .stat{text-align:right;}
+  .program-summary .stat .label{
+    display:block;font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;
+  }
+  .program-summary .stat .value{font-size:19px;font-weight:700;color:var(--purple-dark);}
+  .program-summary .stat.net .value.positive{color:#0F7A3D;}
+  .program-summary .stat.net .value.negative{color:var(--danger);}
+
+  .footer-bar{
+    position:sticky;bottom:0;background:var(--page);padding-top:14px;margin-top:8px;
+    display:flex;justify-content:flex-end;gap:10px;
+    border-top:1px solid var(--line);
+  }
+
+  .toast{
+    position:fixed;bottom:24px;right:24px;background:var(--purple-dark);color:#fff;
+    padding:12px 18px;border-radius:6px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.2);
+    opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateY(0);}
+
+  .empty-meetings{
+    text-align:center;color:var(--sub);font-size:13px;padding:30px 10px;border:1px dashed var(--line);
+    border-radius:6px;background:#fff;
+  }
+
+  /* ===== MemberPlex portal shell ===== */
+  :root{ --page:#FFFFFF; --mp-blue:#2F4FA8; --mp-red:#9B2226; --mp-green:#2E7D32; --mp-gray:#A3A7AE; --mp-nav-ink:#1F2430; }
+  body{font-family:"Work Sans","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;background:#fff;padding:0;}
+  button,input,select,textarea{font-family:inherit;}
+  .mp-header{position:relative;height:120px;overflow:hidden;display:flex;align-items:center;
+    background:
+      radial-gradient(ellipse at 38% 30%, rgba(226,72,255,.55) 0, rgba(226,72,255,0) 22%),
+      linear-gradient(115deg,#5B6E9E 0%,#6E7FAE 22%,#3C3F63 40%,#7D86A8 58%,#2F3350 78%,#1E2138 100%);}
+  .mp-header::before{content:"";position:absolute;inset:0;
+    background:
+      linear-gradient(60deg,transparent 46%,rgba(255,255,255,.12) 47%,transparent 48%),
+      linear-gradient(-60deg,transparent 30%,rgba(0,0,0,.18) 31%,transparent 60%),
+      linear-gradient(120deg,transparent 64%,rgba(255,255,255,.08) 65%,transparent 80%);}
+  .mp-header::after{content:"";position:absolute;right:230px;top:22px;width:6px;height:64px;border-radius:3px;
+    background:linear-gradient(#FFD25A,#FF8A1F);box-shadow:0 0 18px 4px rgba(255,160,40,.55);}
+  .mp-brand{position:relative;z-index:1;display:flex;align-items:center;gap:20px;padding-left:4px;}
+  .mp-logo{width:86px;height:80px;border-radius:14px;background:#5A5BE8;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 16px rgba(30,30,120,.35);}
+  .mp-logo span{display:block;width:9px;height:32px;border-radius:5px;background:#fff;opacity:.92;}
+  .mp-wordmark{color:#fff;font-size:50px;letter-spacing:-.5px;line-height:1;}
+  .mp-wordmark b{font-weight:500;} .mp-wordmark i{font-style:normal;font-weight:300;}
+  .mp-user{position:absolute;left:50%;transform:translateX(-50%);z-index:1;color:#fff;font-weight:700;font-size:32px;text-shadow:0 2px 10px rgba(0,0,0,.35);white-space:nowrap;}
+
+  .mp-shell{display:flex;min-height:calc(100vh - 120px);}
+  .mp-side{width:282px;flex:none;background:#F7F7F8;border-right:1px solid #ECECEF;padding:14px 0 40px;}
+  .mp-side .burger{display:flex;justify-content:flex-end;padding:4px 18px 26px;}
+  .mp-side .burger button{background:none;border:none;cursor:pointer;padding:4px;}
+  .nav-item{display:flex;align-items:center;gap:14px;padding:11px 12px 11px 12px;color:var(--mp-nav-ink);font-size:16px;font-weight:500;cursor:pointer;user-select:none;}
+  .nav-item svg.ico{width:28px;height:24px;flex:none;}
+  .nav-item .car{margin-left:auto;margin-right:16px;font-size:11px;color:#333;transition:transform .15s;}
+  .nav-group.open > .nav-item .car{transform:rotate(180deg);}
+  .nav-sub{display:none;}
+  .nav-group.open .nav-sub{display:block;}
+  .nav-sub a{display:block;padding:11px 12px 11px 75px;color:var(--mp-nav-ink);font-size:16px;text-decoration:none;}
+  .nav-sub a:hover{background:#EFEFF2;}
+  .nav-sub a.active{background:#F59A4E;color:#fff;font-weight:600;}
+  .mp-side .nav-foot{border-top:1px solid #222;margin-top:22px;}
+
+  .mp-main{flex:1;min-width:0;padding:22px 38px 60px;}
+  .mp-main h1{font-size:20px;}
+  .mp-intro{font-size:13.5px;color:#2A2F3A;margin:14px 0 22px;max-width:1100px;}
+
+  .mp-tabs{display:flex;gap:4px;border-bottom:1px solid #EEE;margin-bottom:22px;}
+  .mp-tabs button{background:none;border:none;padding:12px 13px;font-size:12.5px;font-weight:600;letter-spacing:.04em;color:#4A4F5C;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;}
+  .mp-tabs button.on{color:var(--purple);border-bottom-color:var(--purple);}
+
+  .mp-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;margin-bottom:10px;}
+
+  .btn-addline{background:#fff;border:1px dashed var(--purple);color:var(--purple);border-radius:4px;padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer;margin:10px 0 2px 12px;}
+  .btn-addline:hover{background:var(--purple-light);}
+  .row-x{background:none;border:none;color:#B4B8C0;font-size:18px;line-height:1;cursor:pointer;padding:4px 6px;}
+  .row-x:hover{color:#E02424;}
+  td.col-x{width:34px;text-align:center;}
+  .sub-group-label{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--sub);text-transform:uppercase;margin:16px 0 6px 2px;}
+
+  .exp-group-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:18px 0 12px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+  .exp-group-title{font-size:15px;color:var(--purple);margin:0;}
+
+  /* ===== Program Tracker ===== */
+  .trk-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px;}
+  .trk-top p{margin:0;font-size:13.5px;color:#2A2F3A;max-width:760px;}
+  .status-tag{display:inline-block;padding:8px 22px;border-radius:4px;color:#fff;font-weight:700;font-size:13.5px;white-space:nowrap;}
+  .status-tag.submitted{background:var(--mp-blue);} .status-tag.approved{background:var(--mp-green);} .status-tag.rejected{background:var(--mp-red);}
+  .trk-card{background:#fff;border-radius:4px;box-shadow:0 2px 14px rgba(20,20,40,.09);padding:20px 22px;margin-bottom:22px;}
+  .trk-card h3{color:var(--purple);font-size:16px;margin:0 0 4px;}
+  .trk-card p.mp-help{font-size:13px;color:var(--sub);margin:0 0 14px;}
+  .trk-card select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:4px;font-size:14px;background:#fff;color:var(--ink);}
+  table.trk{width:100%;border-collapse:collapse;min-width:880px;font-size:13px;}
+  table.trk th{text-align:left;font-size:12px;font-weight:600;color:#2A2F3A;padding:12px;border-bottom:1px solid #EDEDF0;white-space:nowrap;}
+  table.trk td{padding:10px 12px;border-bottom:1px solid #F1F1F4;color:#2A2F3A;}
+  table.trk .r{text-align:right;font-variant-numeric:tabular-nums;}
+  table.trk tr.grp td{background:#FDF1EA;font-weight:700;}
+  table.trk tr:last-child td{border-bottom:none;}
+  table.trk .neg{color:var(--mp-red);} table.trk .pos{color:var(--mp-green);}
+  .vtag{display:inline-block;padding:4px 10px;border-radius:3px;color:#fff;font-size:11px;font-weight:700;white-space:nowrap;}
+  .vtag.bad{background:var(--mp-red);} .vtag.good{background:var(--mp-green);} .vtag.na{background:var(--mp-gray);}
+  .trk-sum{display:grid;grid-template-columns:auto auto;justify-content:end;column-gap:28px;row-gap:2px;margin:6px 6px 34px;font-size:14px;}
+  .trk-sum span:nth-child(odd){text-align:right;color:#2A2F3A;}
+  .trk-sum span:nth-child(even){text-align:right;font-variant-numeric:tabular-nums;}
+  .trk-sum .big{font-size:19px;font-weight:700;color:var(--ink);}
+  .trk-sum .neg{color:var(--mp-red);}
+  .net-box{margin:10px 0 20px auto;width:min(420px,100%);background:#fff;border-radius:4px;box-shadow:0 2px 14px rgba(20,20,40,.12);padding:18px 22px;}
+  .net-box .ln{display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:var(--purple-dark);padding:4px 0;font-variant-numeric:tabular-nums;}
+  .net-box hr{border:none;border-top:2px solid var(--purple);margin:10px -22px;}
+  .net-box .ln.total{font-size:18px;color:var(--ink);}
+  .net-box .ln.proj{font-size:14px;font-weight:500;color:#2A2F3A;}
+  .trk-note{font-size:12.5px;color:var(--sub);margin:-10px 0 18px;}
+  .mp-actions .btn{padding:9px 14px;font-size:13px;border-radius:3px;box-shadow:0 2px 6px rgba(75,44,130,.25);}
+
+  .mp-sec h3{color:var(--purple);font-size:14px;margin:0 0 8px;letter-spacing:.02em;}
+  .mp-sec p.mp-help{font-size:13.5px;color:#2A2F3A;margin:0 0 16px;}
+  .mp-sec{margin-bottom:38px;}
+
+  .mp-table-wrap{background:#fff;border-radius:4px;box-shadow:0 2px 14px rgba(20,20,40,.09);overflow-x:auto;}
+  table.mp-table{width:100%;border-collapse:collapse;min-width:760px;}
+  table.mp-table th{text-align:left;font-size:13px;font-weight:500;color:#2A2F3A;padding:22px 14px;border-bottom:1px solid #EDEDF0;}
+  table.mp-table td{padding:14px;font-size:13.5px;color:#2A2F3A;border-bottom:1px solid #EDEDF0;vertical-align:middle;}
+  table.mp-table tr:last-child td{border-bottom:none;}
+  table.mp-table tbody tr:hover td{background:#FBFAFD;}
+  table.mp-table .c{text-align:center;}
+  table.mp-table .r{text-align:right;}
+  table.mp-table .amt{font-variant-numeric:tabular-nums;}
+  table.mp-table .empty td{text-align:center;color:var(--sub);padding:30px;}
+
+  .pill{display:inline-block;min-width:80px;text-align:center;padding:3px 10px;border-radius:3px;color:#fff;font-size:10.5px;font-weight:700;}
+  .pill.draft{background:var(--mp-gray);}
+  .pill.submitted{background:var(--mp-blue);}
+  .pill.rejected{background:var(--mp-red);}
+  .pill.approved{background:var(--mp-green);}
+
+  .act-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:64px;padding:5px 10px;background:#fff;border:1px solid var(--purple);border-radius:3px;color:var(--purple);cursor:pointer;line-height:1.1;}
+  .act-btn b{font-size:11px;font-weight:700;}
+  .act-btn small{font-size:6.5px;font-weight:700;letter-spacing:.03em;margin-top:2px;}
+  .act-btn:hover{background:var(--purple-light);}
+  .trash{background:none;border:none;cursor:pointer;padding:6px;color:#E02424;}
+  .trash:hover{color:#A61B1B;}
+  .act-cell{display:flex;align-items:center;justify-content:center;gap:34px;}
+
+  .tracker-empty{border:1px dashed var(--line);border-radius:6px;padding:46px 20px;text-align:center;color:var(--sub);font-size:13.5px;}
+
+  /* entry view adjustments inside the shell */
+  #view-entry .badge.submitted{background:var(--mp-blue);} #view-entry .badge.rejected{background:var(--mp-red);} #view-entry .badge.approved{background:var(--mp-green);}
+  #view-entry .ro-note{display:none;background:var(--purple-light);color:var(--purple-dark);border-radius:4px;padding:10px 14px;font-size:13px;margin:12px 0 0;}
+  #view-entry.readonly .ro-note{display:block;}
+  #view-entry.readonly .footer-bar, #view-entry.readonly #addMeetingBtn, #view-entry.readonly .btn-remove{display:none !important;}
+  .view[hidden]{display:none;}
+
+  :focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+
+  @media (max-width:900px){
+    .mp-side{position:fixed;top:0;left:0;bottom:0;z-index:20;transform:translateX(-100%);transition:transform .2s;box-shadow:4px 0 20px rgba(0,0,0,.15);overflow-y:auto;}
+    body.nav-open .mp-side{transform:none;}
+    .mp-main{padding:20px 18px 60px;}
+    .mp-wordmark{font-size:30px;} .mp-logo{width:56px;height:52px;} .mp-logo span{height:22px;width:7px;}
+    .mp-user{display:none;}
+    .mp-mobile-burger{display:inline-flex !important;}
+  }
+  .mp-mobile-burger{display:none;position:absolute;right:16px;top:44px;z-index:2;background:rgba(255,255,255,.18);border:none;border-radius:4px;padding:6px;cursor:pointer;}
+
+</style>
+</head>
+<body>
+<header class="mp-header">
+  <div class="mp-brand"><div class="mp-logo"><span></span><span></span><span></span></div><div class="mp-wordmark"><b>Member</b><i>Plex</i></div></div>
+  <div class="mp-user">Pepper Pittman</div>
+  <button class="mp-mobile-burger" aria-label="Open menu" onclick="document.body.classList.toggle('nav-open')"><svg width="26" height="20" viewBox="0 0 26 20" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M2 3h22M2 10h22M2 17h22"/></svg></button>
+</header>
+<div class="mp-shell">
+<nav class="mp-side" aria-label="Portal navigation">
+  <div class="burger"><button aria-label="Collapse menu" onclick="document.body.classList.toggle('nav-open')"><svg width="36" height="22" viewBox="0 0 36 22" fill="none" stroke="#1F2430" stroke-width="2.6" stroke-linecap="round"><path d="M4 3h30M12 11h22M4 19h30"/></svg></button></div>
+  <div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#1F2430" stroke-width="2.2"><path d="M3 11l9-7 9 7"/><path d="M6 9.5V20h12V9.5"/><path d="M10 20v-5h4v5"/></svg>Home</div>
+  <div class="nav-group"><div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="#1F2430"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg>My Membership<span class="car">&#9660;</span></div></div>
+  <div class="nav-group"><div class="nav-item"><svg class="ico" viewBox="0 0 28 24" fill="#1F2430"><circle cx="14" cy="8" r="3.5"/><circle cx="6" cy="10" r="2.6"/><circle cx="22" cy="10" r="2.6"/><path d="M8 20c0-3.6 2.7-6 6-6s6 2.4 6 6z"/><path d="M1 20c0-2.6 1.8-4.6 5-4.6 1 0 1.6.2 2.2.5-.8 1.2-1.2 2.6-1.2 4.1z"/><path d="M27 20c0-2.6-1.8-4.6-5-4.6-1 0-1.6.2-2.2.5.8 1.2 1.2 2.6 1.2 4.1z"/></svg>My Community<span class="car">&#9660;</span></div></div>
+  <div class="nav-group open"><div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#1F2430" stroke-width="2.2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="M7 13h4M7 17h7"/></svg>My Programs<span class="car">&#9660;</span></div>
+    <div class="nav-sub">
+      <a href="#" class="active" onclick="showList();return false;">Program Budgets</a>
+    </div>
+  </div>
+  <div class="nav-group"><div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="#1F2430"><path d="M3 6a3 3 0 013-3h12a3 3 0 013 3v1H3z"/><path d="M3 9h18v9a3 3 0 01-3 3H6a3 3 0 01-3-3z"/><rect x="5" y="13" width="14" height="2.2" fill="#fff"/></svg>My Wallet<span class="car">&#9660;</span></div></div>
+  <div class="nav-group"><div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="#1F2430"><path d="M2 21V9h6V3h14v18zM10 7h2v2h-2zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2h-2zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2h-2zm4 0h2v2h-2zm4 0h2v2h-2zM4 12h2v2H4zm0 4h2v2H4z" fill-rule="evenodd"/></svg>My Industry<span class="car">&#9660;</span></div></div>
+  <div class="nav-group"><div class="nav-item"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#1F2430" stroke-width="2.4"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/><circle cx="12" cy="12" r="7"/></svg>My Support<span class="car">&#9660;</span></div></div>
+  <div class="nav-foot"></div>
+</nav>
+<main class="mp-main">
+
+<section class="view" id="view-list">
+  <h1>Program Budget Management</h1>
+  <p class="mp-intro">Build and submit budgets for your programs and missions. Drafts stay editable until you submit them; once submitted, a budget goes to staff for review and you can track whether it's been approved or sent back.</p>
+
+  <div class="mp-tabs" role="tablist">
+    <button class="on" data-tab="budgets" role="tab">PROGRAM BUDGETS</button>
+    <button data-tab="tracker" role="tab">PROGRAM TRACKER</button>
+  </div>
+
+  <div id="tab-budgets">
+    <div class="mp-actions">
+      <button class="btn btn-purple" id="newBudgetBtn">+&nbsp; Submit a Budget</button>
+    </div>
+
+    <div class="mp-sec">
+      <h3>DRAFT PROGRAM BUDGETS</h3>
+      <p class="mp-help">Budgets you've started but haven't submitted yet. Edit a draft to keep working on it, or remove it if it's no longer needed.</p>
+      <div class="mp-table-wrap">
+        <table class="mp-table">
+          <thead><tr><th>Ref #</th><th class="c">Status</th><th>Program</th><th>Last Saved</th><th class="r">Amount</th><th class="c">Action</th></tr></thead>
+          <tbody id="draftRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mp-sec">
+      <h3>SUBMITTED PROGRAM BUDGETS</h3>
+      <p class="mp-help">Budgets sent for review. Each one shows where it stands: Submitted (awaiting review), Approved, or Rejected.</p>
+      <div class="mp-table-wrap">
+        <table class="mp-table">
+          <thead><tr><th>Ref #</th><th class="c">Status</th><th>Submitted Date</th><th>Program</th><th class="r">Amount</th><th class="c">Action</th></tr></thead>
+          <tbody id="submittedRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-tracker" hidden>
+    <div class="trk-top">
+      <p>Pick one of your submitted programs to compare what was budgeted against what was actually spent and earned.</p>
+      <span class="status-tag" id="trkStatus"></span>
+    </div>
+    <div class="trk-card">
+      <h3>Program</h3>
+      <p class="mp-help">Only budgets you've submitted appear here, whatever their status.</p>
+      <select id="trkSelect" aria-label="Submitted program"></select>
+    </div>
+    <div id="trkBody"></div>
+  </div>
+</section>
+
+<section class="view" id="view-entry" hidden>
+
+
+<a class="back" href="#">&larr; Back to Program Budgets</a>
+<div class="topline">
+  <h1>Budget Entry</h1>
+  <span class="badge">DRAFT</span>
+</div>
+<div class="ro-note" id="roNote"></div>
+<p class="lede">Set up a mission or program budget, add one or more meetings, and fill in the expected costs for each. Prefilled line items come straight from the standard budget template &mdash; enter your own numbers and notes for each one. Every table and section can be collapsed once it's filled in.</p>
+
+<div class="card">
+  <h2>Program</h2>
+  <p class="help">Choose the FY2027 program or mission this budget belongs to. Budgets can only be created for the upcoming fiscal year.</p>
+  <label class="field-label">Program Name <span class="req">*</span></label>
+  <select class="program-input" id="programSelect">
+    <option value="">Select a program&hellip;</option>
+    <option>2027 Brunei Mission</option>
+    <option>2027 Cambodia Mission</option>
+    <option>2027 Indonesia Mission</option>
+    <option>2027 Laos Mission</option>
+    <option>2027 Malaysia Mission</option>
+    <option>2027 Myanmar Mission</option>
+    <option>2027 Philippines Mission</option>
+    <option>2027 Singapore Mission</option>
+    <option>2027 Thailand Mission</option>
+    <option>2027 Timor-Leste Mission</option>
+    <option>2027 Vietnam Mission</option>
+    <option value="__custom">+ Add a new program&hellip;</option>
+  </select>
+  <input class="program-input" id="programCustom" type="text" placeholder="Enter new program name" style="display:none;margin-top:8px;">
+</div>
+
+<div class="card">
+  <h2>Expenses</h2>
+  <p class="help">Everything this program is expected to cost. Meeting expenses are entered per meeting; Travel, Program, and Staffing are entered once for the whole program.</p>
+
+  <div style="margin-top:14px;"></div>
+  <div id="meetingsList"></div>
+  <div class="empty-meetings" id="emptyState">No meetings added yet.<div style="margin-top:10px;"><button class="btn btn-purple" id="addMeetingBtn">+ Add a Meeting</button></div></div>
+
+  <div id="programSections" style="margin-top:22px;"></div>
+
+  <div class="total-line" style="margin-top:4px;">
+    <span>Total Expenses:</span><span id="expensesCardTotal">$0.00</span>
+  </div>
+</div>
+
+<div class="card" id="revenueCard">
+  <h2>Budgeted Revenue</h2>
+  <p class="help">Sponsorship, mission fee, and other income expected for this program.</p>
+  <div id="revenueTables"></div>
+  <div class="total-line" style="margin-top:4px;">
+    <span>Total Revenue:</span><span id="revenueCardTotal">$0.00</span>
+  </div>
+</div>
+
+<div class="program-summary">
+  <div class="stat">
+    <span class="label">Total Expenses</span>
+    <span class="value" id="programExpenses">$0.00</span>
+  </div>
+  <div class="stat">
+    <span class="label">Total Revenue</span>
+    <span class="value" id="programRevenue">$0.00</span>
+  </div>
+  <div class="stat net">
+    <span class="label">Net</span>
+    <span class="value" id="programNet">$0.00</span>
+  </div>
+</div>
+
+<div class="footer-bar">
+  <button class="btn btn-outline" id="saveDraftBtn">Save Draft</button>
+  <button class="btn btn-orange" id="submitBtn">Submit for Approval</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+</section>
+</main>
+</div>
+
+<script>
+let meetingCount = 0;
+
+/* ---------- helpers ---------- */
+function fmt(n){
+  if(!isFinite(n)) n = 0;
+  const neg = n < 0;
+  n = Math.abs(n);
+  return (neg?'-':'') + '$' + n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function num(el){ if(!el) return 0; const v = parseFloat(el.value); return isFinite(v)?v:0; }
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ---------- row builders ---------- */
+function fieldRow(field, label, unitType, hint){
+  let valueCell;
+  if(unitType === 'select'){
+    valueCell = `<div class="value-wrap select">
+        <select data-field="${field}">
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Reception">Reception</option>
+          <option value="Custom">Custom</option>
+        </select>
+      </div>`;
+  } else {
+    const prefix = unitType === '$' ? '$' : (unitType === '%' ? '%' : '#');
+    valueCell = `<div class="value-wrap">
+        <span class="prefix">${prefix}</span>
+        <input type="number" step="0.01" data-field="${field}" placeholder="0" min="0">
+      </div>`;
+  }
+  return `<tr class="calc-input-row">
+      <td class="row-label">${label}${hint?` <span class="unit-hint">${hint}</span>`:''}</td>
+      <td class="col-memo"><input class="memo-input" type="text" data-field="${field}_memo" placeholder="Add a memo (optional)"></td>
+      <td class="col-value">${valueCell}</td>
+    </tr>`;
+}
+
+function readonlyRow(field, label){
+  return `<tr>
+      <td class="row-label">${label}</td>
+      <td class="col-memo"></td>
+      <td class="col-value"><div class="value-wrap" style="background:var(--readonly-bg);border-color:var(--line);">
+        <span class="prefix" style="background:#EDEEF0;">$</span>
+        <input type="text" data-out="${field}" value="0.00" disabled style="color:var(--readonly-ink);font-weight:600;">
+      </div></td>
+    </tr>`;
+}
+
+function tableHead(){
+  return `<thead><tr>
+      <th>Item</th><th class="col-memo">Memo</th><th class="col-value">Amount</th>
+    </tr></thead>`;
+}
+
+/* ---------- subtable builder (static rows) ---------- */
+function buildSubtable(type, section, title, rows, totalLabel){
+  const rowsHtml = rows.map(r => r.readonly ? readonlyRow(r.field, r.label) : fieldRow(r.field, r.label, r.unit, r.hint)).join('');
+  return `
+  <div class="subtable" data-type="${type}" data-section="${section}">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">${title}</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        ${tableHead()}
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+      <div class="total-line"><span>${totalLabel}</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- dynamic subtables: airfare & hotel (start with one line, add more as needed) ---------- */
+function airfareRow(n){
+  return `<tr class="dyn-row">
+    <td class="row-label"><input class="dyn-label" type="text" data-field="label" value="Airfare/Train ${n}"></td>
+    <td class="col-memo"><input class="memo-input" type="text" data-field="memo" placeholder="e.g. traveler name, route"></td>
+    <td class="col-value"><div class="value-wrap"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-field="cost" placeholder="0"></div></td>
+    <td class="col-x"><button class="row-x" title="Remove line" aria-label="Remove line" onclick="removeDynRow(this)">&times;</button></td>
+  </tr>`;
+}
+function hotelRow(n){
+  return `<tr class="dyn-row">
+    <td class="row-label"><input class="dyn-label" type="text" data-field="label" value="Hotel Room ${n}"></td>
+    <td class="col-memo"><input class="memo-input" type="text" data-field="memo" placeholder="e.g. traveler name">
+      <div style="font-size:11px;color:var(--sub);margin-top:3px;">Room total: <span data-rowout="subtotal">$0.00</span></div>
+    </td>
+    <td class="col-value" style="display:flex;gap:6px;width:230px;">
+      <div class="value-wrap" style="flex:1;"><span class="prefix">#</span><input type="number" step="1" min="0" data-field="nights" placeholder="Nights"></div>
+      <div class="value-wrap" style="flex:1;"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-field="rate" placeholder="Rate/night"></div>
+    </td>
+    <td class="col-x"><button class="row-x" title="Remove line" aria-label="Remove line" onclick="removeDynRow(this)">&times;</button></td>
+  </tr>`;
+}
+
+function sponsorAmtRow(n, level){
+  return `<tr class="dyn-row">
+    <td class="row-label">${level} (${n})</td>
+    <td class="col-memo"><input class="memo-input" type="text" data-field="memo" placeholder="Company / sponsor name"></td>
+    <td class="col-value"><div class="value-wrap"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-field="cost" placeholder="0"></div></td>
+    <td class="col-x"><button class="row-x" title="Remove line" aria-label="Remove line" onclick="removeDynRow(this)">&times;</button></td>
+  </tr>`;
+}
+const DYN_ROWS = {airfare: airfareRow, hotel: hotelRow, sponsoramt: sponsorAmtRow};
+function addDynRow(btn, type){
+  const st = btn.closest('.subtable'), body = st.querySelector('.dyn-body');
+  const n = (+body.dataset.n || body.querySelectorAll('.dyn-row').length) + 1;
+  body.dataset.n = n;
+  body.insertAdjacentHTML('beforeend', DYN_ROWS[type](n, st.querySelector('.subtable-head .title').textContent));
+  body.lastElementChild.querySelector('[data-field="memo"]').focus();
+  recalcSubtable(st);
+}
+function removeDynRow(btn){
+  const st = btn.closest('.subtable');
+  btn.closest('tr').remove();
+  recalcSubtable(st);
+}
+function buildFixedSubtable(type, section, title, totalLabel, count, rowBuilder, valueHeaderLabel, addLabel){
+  const rowsHtml = Array.from({length:count}, (_,i)=> rowBuilder(i+1, title)).join('');
+  return `
+  <div class="subtable" data-type="${type}" data-section="${section}">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">${title}</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        <thead><tr>
+          <th>Item</th><th class="col-memo">Memo</th><th class="col-value">${valueHeaderLabel}</th><th class="col-x"></th>
+        </tr></thead>
+        <tbody class="dyn-body">${rowsHtml}</tbody>
+      </table>
+      <button class="btn-addline" onclick="addDynRow(this,'${type}')">+ ${addLabel}</button>
+      <div class="total-line"><span>${totalLabel}</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- single-category subtables (each has its own total for its GL account) ---------- */
+function cat(type, section, title, rows){
+  return buildSubtable(type, section, title, rows || [{field:'amount', label:title, unit:'$'}], 'Total:');
+}
+function sponsorRow(label){
+  return `<tr class="dyn-row" data-level="${label}">
+    <td class="row-label">${label}</td>
+    <td class="col-memo"><input class="memo-input" type="text" data-field="memo" placeholder="e.g. sponsor names">
+      <div style="font-size:11px;color:var(--sub);margin-top:3px;">Level total: <span data-rowout="subtotal">$0.00</span></div>
+    </td>
+    <td class="col-value" style="display:flex;gap:6px;width:230px;">
+      <div class="value-wrap" style="flex:1;"><span class="prefix">#</span><input type="number" step="1" min="0" data-field="sponsors" placeholder="0"></div>
+      <div class="value-wrap" style="flex:1;"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-field="amount" placeholder="0"></div>
+    </td>
+  </tr>`;
+}
+function sponsorTable(labels){
+  return `
+  <div class="subtable" data-type="sponsorlevels" data-section="revenue">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">Sponsorship Levels</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        <thead><tr><th>Level</th><th class="col-memo">Memo</th><th class="col-value">Sponsors / Amount</th></tr></thead>
+        <tbody>${labels.map(sponsorRow).join('')}</tbody>
+      </table>
+      <div class="total-line"><span>Total Sponsorship:</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+/* ---------- paired-line category: # count / $ amount on one line (like hotel nights/rate) ---------- */
+function pairRow(label, memoHint){
+  return `<tr class="pair-row">
+    <td class="row-label">${label}</td>
+    <td class="col-memo"><input class="memo-input" type="text" data-field="memo" placeholder="${memoHint||'Add a memo (optional)'}"></td>
+    <td class="col-value" style="display:flex;gap:6px;width:230px;">
+      <div class="value-wrap" style="flex:1;"><span class="prefix">#</span><input type="number" step="1" min="0" data-pair="qty" placeholder="0"></div>
+      <div class="value-wrap" style="flex:1;"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-pair="amt" placeholder="0"></div>
+    </td>
+  </tr>`;
+}
+function pairSubtable(section, title, rowLabel, headerLabel, totalLabel, memoHint, extraRows){
+  const extra = (extraRows||[]).map(r => fieldRow(r.field, r.label, r.unit, r.hint)).join('');
+  return `
+  <div class="subtable" data-type="pair" data-section="${section}">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">${title}</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        <thead><tr><th>Item</th><th class="col-memo">Memo</th><th class="col-value">${headerLabel}</th></tr></thead>
+        <tbody>${pairRow(rowLabel, memoHint)}${extra}</tbody>
+      </table>
+      <div class="total-line"><span>${totalLabel}</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+function qtyCat(section, title, qtyLabel, amtLabel){
+  return `<div class="subtable-wrap" data-qtycat>` + buildSubtable('qtyrev', section, title, [
+    {field:'qty', label:qtyLabel, unit:'#'},
+    {field:'amt', label:amtLabel, unit:'$'},
+  ], 'Total Revenue:') + `</div>`;
+}
+
+/* ---------- section builder ---------- */
+function buildSection(sectionKey, title, help, subtablesHtml){
+  return `
+  <div class="section" data-section-key="${sectionKey}">
+    <div class="section-head" onclick="toggleCollapse(this,'chev','section-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">${title}</span>
+      <span class="amt" data-sectiontotal>$0.00</span>
+    </div>
+    <div class="section-body">
+      ${help ? `<div class="subtotal-hint">${help}</div>` : ''}
+      ${subtablesHtml}
+    </div>
+  </div>`;
+}
+
+/* ---------- revenue tables: Sponsorship & Mission Fee (amount x quantity = revenue) ---------- */
+function qtyRevenueRow(label){
+  return `<tr class="qty-row">
+    <td class="row-label">${label}</td>
+    <td class="col-memo"><input class="memo-input" type="text" data-role="memo" placeholder="Add a memo (optional)"></td>
+    <td class="col-value"><div class="value-wrap"><span class="prefix">#</span><input type="number" step="1" min="0" data-role="qty" placeholder="0"></div></td>
+    <td class="col-value"><div class="value-wrap"><span class="prefix">$</span><input type="number" step="0.01" min="0" data-role="amt" placeholder="0"></div></td>
+    <td class="col-value"><div class="value-wrap" style="background:var(--readonly-bg);border-color:var(--line);">
+      <span class="prefix" style="background:#EDEEF0;">$</span>
+      <input type="text" data-role="rev" value="0.00" disabled style="color:var(--readonly-ink);font-weight:600;">
+    </div></td>
+  </tr>`;
+}
+function qtyRevenueTable(type, title, qtyLabel, rowLabels){
+  const rowsHtml = rowLabels.map(qtyRevenueRow).join('');
+  return `
+  <div class="subtable" data-type="${type}" data-section="revenue">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">${title}</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        <thead><tr><th>Item</th><th class="col-memo">Memo</th><th class="col-value">${qtyLabel}</th><th class="col-value">Amount</th><th class="col-value">Revenue</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+      <div class="total-line"><span>Total Revenue:</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- revenue table: Other Income (direct value + memo per row) ---------- */
+function otherIncomeTable(){
+  const labels = [['pub','Publications'],['grants','Grants'],['other','Other']];
+  const rowsHtml = labels.map(([field,label]) => fieldRow(field, label, '$')).join('');
+  return `
+  <div class="subtable" data-type="otherincome" data-section="revenue">
+    <div class="subtable-head" onclick="toggleCollapse(this,'chev','subtable-body')">
+      <span class="chev">&#9660;</span>
+      <span class="title">Other Income</span>
+      <span class="amt" data-out="total">$0.00</span>
+    </div>
+    <div class="subtable-body">
+      <table class="rows">
+        ${tableHead()}
+        <tbody>${rowsHtml}</tbody>
+      </table>
+      <div class="total-line"><span>Total Revenue:</span><span data-out="total">$0.00</span></div>
+    </div>
+  </div>`;
+}
+
+/* ---------- meeting builder ---------- */
+function buildMeetingHtml(id){
+  const expensesHtml =
+    buildSubtable('foodbev','expenses','Food & Beverage', [
+      {field:'reception', label:'Reception / person', unit:'$'},
+      {field:'bar', label:'Bar / person', unit:'$'},
+      {field:'meal', label:'Meal / person', unit:'$'},
+      {field:'perperson', label:'Total / Person', readonly:true},
+      {field:'participants', label:'Number of Participants', unit:'#'},
+      {field:'subtotal', label:'Subtotal', readonly:true},
+      {field:'service', label:'Service Charge', unit:'%'},
+      {field:'tax', label:'Tax Rate', unit:'%'},
+    ], 'Total Cost:') +
+    cat('sum','expenses','Venue Rental', [
+      {field:'venue', label:'Venue Rental', unit:'$'},
+    ]) +
+    buildSubtable('av','expenses','A/V & Translation Equipment', [
+      {field:'mic', label:'Microphones & Audio System', unit:'$'},
+      {field:'projector', label:'Projector/Screen', unit:'$'},
+      {field:'tech', label:'Technician / Set Up / Breakdown', unit:'$'},
+      {field:'pipe', label:'Pipe & Drape', unit:'$'},
+      {field:'internet', label:'High Speed Internet', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+      {field:'subtotal', label:'Subtotal', readonly:true},
+      {field:'service', label:'Service Charge', unit:'%'},
+      {field:'tax', label:'Tax Rate', unit:'%'},
+    ], 'Total:') +
+    buildSubtable('decor','expenses','D\u00e9cor', [
+      {field:'flowerCost', label:'Flowers Cost / Arrangement', unit:'$'},
+      {field:'arrangements', label:'Number of Arrangements', unit:'#'},
+      {field:'delivery', label:'Delivery Cost', unit:'$'},
+      {field:'linen', label:'Linen', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+    ], 'Total:') +
+    buildSubtable('othermeeting','expenses','Other', [
+      {field:'bartender', label:'Bartender Fee', unit:'$'},
+      {field:'coatcheck', label:'Coat Check Fee', unit:'$'},
+      {field:'security', label:'Security', unit:'$'},
+      {field:'ushers', label:'Ushers', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+    ], 'Total:');
+
+  return `
+  <div class="meeting" data-meeting id="meeting-${id}">
+    <div class="meeting-head">
+      <span class="chev" onclick="toggleCollapse(this,'chev','meeting-body', true)">&#9660;</span>
+      <input class="meeting-name" type="text" placeholder="Meeting name, e.g. Embassy Breakfast Briefing">
+      <span class="meeting-total" data-meetingtotal>$0.00</span>
+      <button class="btn btn-purple" style="padding:6px 12px;font-size:12.5px;white-space:nowrap;" onclick="addMeeting(event)">+ Add a Meeting</button>
+      <button class="btn btn-remove" onclick="removeMeeting(${id})">Remove</button>
+    </div>
+    <div class="meeting-body">
+      ${expensesHtml}
+    </div>
+  </div>`;
+}
+
+/* ---------- program-level sections (entered once per program) ---------- */
+function buildProgramSectionsHtml(){
+  const travelHtml =
+    buildFixedSubtable('airfare','travel','Airfare / Train','Total Airfare / Train:', 1, airfareRow, 'Cost', 'Add airfare / train line') +
+    buildFixedSubtable('hotel','travel','Hotel','Total Hotel:', 1, hotelRow, 'Nights / Rate', 'Add hotel room') +
+    pairSubtable('travel','Meals (Individual)','Meals','Days / Per Diem','Total Meal Costs:','e.g. traveler name') +
+    buildSubtable('transportation','travel','Transportation', [
+      {field:'carRental', label:'Car Rental', unit:'$'},
+      {field:'airportTransfer', label:'Airport Transfer', unit:'$'},
+      {field:'taxi', label:'Taxi', unit:'$'},
+      {field:'groupTransport', label:'Group Transportation', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+    ], 'Total Transportation:') +
+    buildSubtable('visa','travel','Visa Fees', [
+      {field:'fee', label:'Visa Fee / traveler', unit:'$'},
+      {field:'travelers', label:'Number of Travelers', unit:'#'},
+    ], 'Total Visa Fees:');
+
+  const miscHtml =
+    buildSubtable('entertainment','misc','Entertainment', [
+      {field:'meals', label:'Meals', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+    ], 'Total:') +
+    buildSubtable('creditcard','misc','Credit Card Fees', [
+      {field:'visa', label:'Visa / MC', unit:'$'},
+      {field:'amex', label:'AMEX', unit:'$'},
+    ], 'Total:') +
+    pairSubtable('misc','Photographer','Photographer','Hours or Days / Rate','Total:','e.g. hourly or daily rate', [
+      {field:'editing', label:'Editing', unit:'$'},
+    ]) +
+    buildSubtable('printing','misc','Printing & Supplies', [
+      {field:'posters', label:'Posters', unit:'$'},
+      {field:'programs', label:'Programs', unit:'$'},
+      {field:'printingOther', label:'Printing \u2013 Other', unit:'$'},
+      {field:'supplies', label:'Supplies', unit:'$'},
+      {field:'health', label:'Health Supplies', unit:'$'},
+    ], 'Total:') +
+    cat('sum','misc','Local Transportation') +
+    cat('sum','misc','Honorarium (Speakers/Moderator)') +
+    cat('sum','misc','Courier & Communication') +
+    cat('sum','misc','Office Rental (for Assistant)') +
+    cat('sum','misc','Gifts') +
+    cat('sum','misc','IT Licenses') +
+    cat('sum','misc','License', [{field:'amount', label:'License <span class="unit-hint">Meeting-related licenses from local government (IP, music, etc.)</span>', unit:'$'}]) +
+    buildSubtable('othermisc','misc','Other', [
+      {field:'postage', label:'Postage / Shipping', unit:'$'},
+      {field:'publications', label:'Publications', unit:'$'},
+      {field:'dues', label:'Dues / Fees', unit:'$'},
+      {field:'gift', label:'Gift', unit:'$'},
+      {field:'security', label:'Security', unit:'$'},
+      {field:'other', label:'Other', unit:'$'},
+    ], 'Total:');
+
+  const staffingHtml = [
+    'Background Check','Interpreter','Document Translation','Entertainer','Florist',
+    'Assistant Stipend \u2013 Short Term','Event Manager/Contractor','Program Assistant',
+    'Consultant','IT \u2013 Contractor','Staffing (Other)'
+  ].map(t => cat('sum','staffing',t)).join('');
+
+  return buildSection('travel','Travel','Airfare/train, hotel, individual meals, transportation, and visa fees for the mission. Add a line for each ticket or room.', travelHtml) +
+    buildSection('misc','Program','Each category has its own total. Only postage, publications, dues/fees, gift, security, and other are grouped under Other.', miscHtml) +
+    buildSection('staffing','Staffing / Professional Services','Each service is its own category with its own total.', staffingHtml);
+}
+
+/* ---------- collapse toggle ---------- */
+function toggleCollapse(headEl, chevClass, bodyClass, headIsChev){
+  const chev = headIsChev ? headEl : headEl.querySelector('.'+chevClass);
+  const container = headIsChev ? headEl.closest('.meeting') : headEl.parentElement;
+  const body = container.querySelector('.'+bodyClass);
+  if(!body) return;
+  body.classList.toggle('collapsed');
+  chev.classList.toggle('collapsed');
+}
+
+/* ---------- meeting management ---------- */
+function addMeeting(){
+  const unnamed = Array.from(document.querySelectorAll('.meeting-name')).find(inp => !inp.value.trim());
+  if(unnamed){
+    showToast('Name your current meeting before adding another.');
+    unnamed.focus();
+    unnamed.style.borderColor = 'var(--danger)';
+    setTimeout(()=>{ unnamed.style.borderColor = ''; }, 1500);
+    return;
+  }
+  meetingCount++;
+  const id = meetingCount;
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = buildMeetingHtml(id);
+  const fromClick = arguments[0] instanceof Event;
+  if(fromClick){
+    document.querySelectorAll('#meetingsList .meeting-body:not(.collapsed)').forEach(b=>{
+      b.classList.add('collapsed'); b.closest('.meeting').querySelector('.meeting-head .chev').classList.add('collapsed');
+    });
+  }
+  const newEl = wrapper.firstElementChild;
+  document.getElementById('meetingsList').appendChild(newEl);
+  if(fromClick){ newEl.scrollIntoView({behavior:'smooth',block:'start'}); newEl.querySelector('.meeting-name').focus({preventScroll:true}); }
+  document.getElementById('emptyState').style.display = 'none';
+  recalcProgram();
+}
+function removeMeeting(id){
+  const el = document.getElementById('meeting-'+id);
+  if(el) el.remove();
+  if(!document.querySelectorAll('[data-meeting]').length){
+    document.getElementById('emptyState').style.display = '';
+  }
+  recalcProgram();
+}
+
+
+/* ---------- calculations ---------- */
+function get(el, field){
+  const f = el.querySelector('[data-field="'+field+'"]');
+  return num(f);
+}
+function setOut(el, field, val){
+  const o = el.querySelector('[data-out="'+field+'"]');
+  if(o) o.value = val.toFixed(2);
+}
+
+function recalcSubtable(el){
+  const type = el.dataset.type;
+  let total = 0;
+
+  switch(type){
+    case 'foodbev': {
+      const perPerson = get(el,'reception') + get(el,'bar') + get(el,'meal');
+      const participants = get(el,'participants');
+      const subtotal = perPerson * participants;
+      const svc = get(el,'service')/100, tax = get(el,'tax')/100;
+      total = subtotal * (1 + svc + tax);
+      setOut(el,'perperson',perPerson);
+      setOut(el,'subtotal',subtotal);
+      break;
+    }
+    case 'av': {
+      const subtotal = get(el,'mic')+get(el,'projector')+get(el,'tech')+get(el,'pipe')+get(el,'internet')+get(el,'other');
+      const svc = get(el,'service')/100, tax = get(el,'tax')/100;
+      total = subtotal * (1 + svc + tax);
+      setOut(el,'subtotal',subtotal);
+      break;
+    }
+    case 'decor': {
+      total = get(el,'flowerCost') * get(el,'arrangements') + get(el,'delivery') + get(el,'linen') + get(el,'other');
+      break;
+    }
+    case 'othermeeting': {
+      total = get(el,'bartender')+get(el,'coatcheck')+get(el,'security')+get(el,'ushers')+get(el,'other');
+      break;
+    }
+    case 'sponsoramt':
+    case 'airfare': {
+      el.querySelectorAll('.dyn-row').forEach(row=>{
+        total += num(row.querySelector('[data-field="cost"]'));
+      });
+      break;
+    }
+    case 'hotel': {
+      el.querySelectorAll('.dyn-row').forEach(row=>{
+        const rate = num(row.querySelector('[data-field="rate"]'));
+        const nights = num(row.querySelector('[data-field="nights"]'));
+        const sub = rate * nights;
+        const out = row.querySelector('[data-rowout="subtotal"]');
+        if(out) out.textContent = fmt(sub);
+        total += sub;
+      });
+      break;
+    }
+    case 'meals': {
+      total = get(el,'perDay') * get(el,'days');
+      break;
+    }
+    case 'transportation': {
+      total = get(el,'carRental')+get(el,'airportTransfer')+get(el,'taxi')+get(el,'groupTransport')+get(el,'other');
+      break;
+    }
+    case 'entertainment': {
+      total = get(el,'meals')+get(el,'other');
+      break;
+    }
+    case 'creditcard': {
+      total = get(el,'visa')+get(el,'amex');
+      break;
+    }
+    case 'photographer': {
+      total = get(el,'rate')*get(el,'hours') + get(el,'editing');
+      break;
+    }
+    case 'printing': {
+      total = get(el,'posters')+get(el,'programs')+get(el,'printingOther')+get(el,'supplies')+get(el,'health');
+      break;
+    }
+    case 'othermisc': {
+      total = get(el,'postage')+get(el,'publications')+get(el,'dues')+get(el,'gift')+get(el,'security')+get(el,'other');
+      break;
+    }
+    case 'visa': {
+      total = get(el,'fee') * get(el,'travelers');
+      break;
+    }
+    case 'sum': {
+      el.querySelectorAll('input[type="number"][data-field]').forEach(i=>{ total += num(i); });
+      break;
+    }
+    case 'pair': {
+      el.querySelectorAll('tr.pair-row').forEach(row=>{
+        total += num(row.querySelector('[data-pair="qty"]')) * num(row.querySelector('[data-pair="amt"]'));
+      });
+      el.querySelectorAll('tr.calc-input-row input[type="number"][data-field]').forEach(i=>{ total += num(i); });
+      break;
+    }
+    case 'sponsorlevels': {
+      el.querySelectorAll('.dyn-row').forEach(row=>{
+        const sub = num(row.querySelector('[data-field="sponsors"]')) * num(row.querySelector('[data-field="amount"]'));
+        row.dataset.total = sub;
+        const out = row.querySelector('[data-rowout="subtotal"]');
+        if(out) out.textContent = fmt(sub);
+        total += sub;
+      });
+      break;
+    }
+    case 'qtyrev': {
+      total = get(el,'qty') * get(el,'amt');
+      break;
+    }
+    case 'staffing': {
+      total = get(el,'backgroundCheck')+get(el,'interpreter')+get(el,'docTranslation')+get(el,'entertainer')
+            + get(el,'florist')+get(el,'assistantStipend')+get(el,'eventManager')+get(el,'programAssistant')
+            + get(el,'consultant')+get(el,'itContractor')+get(el,'staffingOther');
+      break;
+    }
+    case 'sponsorship':
+    case 'missionfee': {
+      el.querySelectorAll('tr.qty-row').forEach(row=>{
+        const amt = num(row.querySelector('[data-role="amt"]'));
+        const qty = num(row.querySelector('[data-role="qty"]'));
+        const rev = amt * qty;
+        const out = row.querySelector('[data-role="rev"]');
+        if(out) out.value = rev.toFixed(2);
+        total += rev;
+      });
+      break;
+    }
+    case 'otherincome': {
+      total = get(el,'pub')+get(el,'grants')+get(el,'other');
+      break;
+    }
+  }
+
+  el.querySelectorAll('[data-out="total"]').forEach(o=>{
+    if(o.tagName === 'INPUT') o.value = total.toFixed(2); else o.textContent = fmt(total);
+  });
+  el.dataset.total = total;
+
+  const meeting = el.closest('[data-meeting]');
+  if(meeting){
+    recalcMeeting(meeting);
+  } else if(el.closest('#programSections')){
+    recalcProgramSections();
+  } else if(el.closest('#revenueCard')){
+    recalcRevenueCard();
+  }
+}
+
+function recalcProgramSections(){
+  document.querySelectorAll('#programSections .section').forEach(sec=>{
+    let t = 0; sec.querySelectorAll('.subtable').forEach(st=>{ t += parseFloat(st.dataset.total)||0; });
+    const out = sec.querySelector('[data-sectiontotal]'); if(out) out.textContent = fmt(t);
+  });
+  recalcProgram();
+}
+function recalcMeeting(meetingEl){
+  let grand = 0;
+  meetingEl.querySelectorAll('.subtable').forEach(st=>{ grand += parseFloat(st.dataset.total) || 0; });
+  meetingEl.dataset.expensetotal = grand;
+  const mtOut = meetingEl.querySelector('[data-meetingtotal]');
+  if(mtOut) mtOut.textContent = fmt(grand);
+
+  recalcProgram();
+}
+
+function recalcRevenueCard(){
+  let total = 0;
+  document.querySelectorAll('#revenueCard .subtable').forEach(st=>{
+    total += parseFloat(st.dataset.total) || 0;
+  });
+  document.getElementById('revenueCardTotal').textContent = fmt(total);
+  document.querySelectorAll('#revenueCard .section').forEach(sec=>{
+    let t = 0; sec.querySelectorAll('.subtable').forEach(st=>{ t += parseFloat(st.dataset.total)||0; });
+    const out = sec.querySelector('[data-sectiontotal]'); if(out) out.textContent = fmt(t);
+  });
+  recalcProgram();
+}
+
+function recalcProgram(){
+  let expenses = 0;
+  document.querySelectorAll('[data-meeting]').forEach(m=>{
+    expenses += parseFloat(m.dataset.expensetotal) || 0;
+  });
+  document.querySelectorAll('#programSections .subtable').forEach(st=>{
+    expenses += parseFloat(st.dataset.total) || 0;
+  });
+  const ect = document.getElementById('expensesCardTotal'); if(ect) ect.textContent = fmt(expenses);
+  let revenue = 0;
+  document.querySelectorAll('#revenueCard .subtable').forEach(st=>{
+    revenue += parseFloat(st.dataset.total) || 0;
+  });
+  const net = revenue - expenses;
+
+  document.getElementById('programExpenses').textContent = fmt(expenses);
+  document.getElementById('programRevenue').textContent = fmt(revenue);
+  const netEl = document.getElementById('programNet');
+  netEl.textContent = fmt(net);
+  netEl.classList.remove('positive','negative');
+  netEl.classList.add(net < 0 ? 'negative' : 'positive');
+}
+
+/* ---------- event delegation ---------- */
+document.addEventListener('input', (e)=>{
+  const subtable = e.target.closest('.subtable');
+  if(subtable) recalcSubtable(subtable);
+});
+document.addEventListener('change', (e)=>{
+  const subtable = e.target.closest('.subtable');
+  if(subtable && e.target.tagName === 'SELECT') recalcSubtable(subtable);
+});
+
+document.getElementById('addMeetingBtn').addEventListener('click', addMeeting);
+document.getElementById('saveDraftBtn').addEventListener('click', ()=> showToast('Draft saved.'));
+
+function getProgramName(){
+  const sel = document.getElementById('programSelect');
+  const custom = document.getElementById('programCustom');
+  if(sel.value === '__custom') return custom.value.trim();
+  return sel.value.trim();
+}
+document.getElementById('programSelect').addEventListener('change', (e)=>{
+  const custom = document.getElementById('programCustom');
+  if(e.target.value === '__custom'){
+    custom.style.display = 'block';
+    custom.focus();
+  } else {
+    custom.style.display = 'none';
+  }
+});
+
+document.getElementById('submitBtn').addEventListener('click', ()=>{
+  const name = getProgramName();
+  if(!name){ showToast('Add a program name before submitting.'); return; }
+  if(!document.querySelectorAll('[data-meeting]').length){ showToast('Add at least one meeting before submitting.'); return; }
+  showToast('Submitted for approval.');
+});
+
+/* populate the Budgeted Revenue tables once */
+document.getElementById('revenueTables').innerHTML =
+  buildSection('sponsorship','Sponsorship','Each sponsorship level is its own category. For Levels 1\u20134, add a line for each sponsor with their amount.',
+    ['Level 1 \u2013 Platinum','Level 2 \u2013 Gold','Level 3 \u2013 Silver','Level 4 \u2013 Bronze']
+      .map(l => buildFixedSubtable('sponsoramt','revenue', l, 'Total:', 1, sponsorAmtRow, 'Amount', 'Add sponsor')).join('') +
+    ['Individual Seat','General Sponsor','Non-Members']
+      .map(l => pairSubtable('revenue', l, l, 'Sponsors / Amount', 'Total:', 'e.g. sponsor names')).join('')) +
+  buildSection('missionfee','Mission Fee','Each fee type is its own category with its own total.',
+    ['Members','Non-Members','Additional Participant','Discounted / Joint Mission Fee']
+      .map(t => pairSubtable('revenue', t, t, 'Participants / Fee', 'Total:', 'Add a memo (optional)')).join('')) +
+  buildSection('otherincome','Other Income','Each income type is its own category with its own total.',
+    ['Publications','Grants','Other'].map(t => cat('sum','revenue',t)).join(''));
+
+/* program-level sections, then one meeting so the layout is visible immediately */
+document.getElementById('programSections').innerHTML = buildProgramSectionsHtml();
+addMeeting();
+</script>
+
+<script>
+/* ===== Budget Management list + navigation (mockup data) ===== */
+const TRASH = '<svg width="16" height="18" viewBox="0 0 16 18" fill="currentColor"><path d="M5 0h6l1 1h4v2H0V1h4z"/><path d="M1.5 4.5h13L13.4 17a1.2 1.2 0 01-1.2 1H3.8a1.2 1.2 0 01-1.2-1z"/></svg>';
+let nextRef = 346;
+const budgets = [
+  {ref:345,status:'Draft',program:'2027 Cambodia Mission',saved:'Oct 22, 2026',amount:90000.59},
+  {ref:234,status:'Draft',program:'2027 Indonesia Mission',saved:'Oct 9, 2026',amount:21892.40},
+  {ref:211,status:'Draft',program:'2027 Laos Mission',saved:'Sep 30, 2026',amount:58100.12},
+  {ref:123,status:'Submitted',program:'2027 Philippines Mission',date:'June 30, 2026',amount:10000.59},
+  {ref:105,status:'Rejected',program:'2027 Malaysia Mission',date:'June 10, 2026',amount:21200.40},
+  {ref:88,status:'Approved',program:'2027 Thailand Mission',date:'June 1, 2026',amount:58045.12},
+  {ref:74,status:'Submitted',program:'2027 Singapore Mission',date:'May 29, 2026',amount:64080.39},
+  {ref:66,status:'Rejected',program:'2027 Vietnam Mission',date:'May 15, 2026',amount:82560.30},
+  {ref:12,status:'Approved',program:'2027 Timor-Leste Mission',date:'April 30, 2026',amount:102939.53}
+];
+let current = null; // budget being edited/viewed (null = new)
+
+function today(){ return new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
+function todayShort(){ return new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+
+function renderLists(){
+  const drafts = budgets.filter(b=>b.status==='Draft');
+  const subs = budgets.filter(b=>b.status!=='Draft');
+  document.getElementById('draftRows').innerHTML = drafts.length ? drafts.map(b=>`
+    <tr><td>${b.ref}</td><td class="c"><span class="pill draft">Draft</span></td><td>${b.program}</td><td>${b.saved||''}</td>
+      <td class="r amt">${fmt(b.amount)}</td>
+      <td><div class="act-cell"><button class="act-btn" onclick="openEntry(${b.ref},'edit')"><b>EDIT</b><small>BUDGET</small></button>
+      <button class="trash" aria-label="Remove draft ${b.ref}" onclick="removeDraft(${b.ref})">${TRASH}</button></div></td></tr>`).join('')
+    : '<tr class="empty"><td colspan="6">No drafts. Click "+ Submit a Budget" to start one.</td></tr>';
+  document.getElementById('submittedRows').innerHTML = subs.length ? subs.map(b=>`
+    <tr><td>${b.ref}</td><td class="c"><span class="pill ${b.status.toLowerCase()}">${b.status}</span></td><td>${b.date}</td><td>${b.program}</td>
+      <td class="r amt">${fmt(b.amount)}</td>
+      <td class="c"><button class="act-btn" onclick="openTracker(${b.ref})"><b>VIEW</b><small>BUDGET</small></button></td></tr>`).join('')
+    : '<tr class="empty"><td colspan="6">Nothing submitted yet.</td></tr>';
+}
+function removeDraft(ref){
+  const btn = event && event.currentTarget;
+  if(btn && !btn.dataset.armed){ btn.dataset.armed='1'; btn.innerHTML='<b style="font-size:11px">Remove?</b>'; setTimeout(()=>{ if(btn.isConnected){ delete btn.dataset.armed; btn.innerHTML=TRASH; } },3000); return; }
+  const i = budgets.findIndex(b=>b.ref===ref); if(i>-1) budgets.splice(i,1);
+  renderLists(); showToast('Draft #'+ref+' removed.');
+}
+
+/* tabs */
+function switchTab(name){
+  document.querySelectorAll('.mp-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===name));
+  document.getElementById('tab-budgets').hidden = name!=='budgets';
+  document.getElementById('tab-tracker').hidden = name!=='tracker';
+  if(name==='tracker') renderTracker();
+}
+document.querySelectorAll('.mp-tabs button').forEach(btn=>btn.addEventListener('click',()=>{
+  switchTab(btn.dataset.tab); return;
+  document.getElementById('tab-budgets').hidden = btn.dataset.tab!=='budgets';
+  document.getElementById('tab-tracker').hidden = btn.dataset.tab!=='tracker';
+}));
+
+/* view switching */
+const revenueTemplate = document.getElementById('revenueTables').innerHTML;
+function resetEntry(){
+  document.getElementById('meetingsList').innerHTML = '';
+  document.getElementById('revenueTables').innerHTML = revenueTemplate;
+  document.getElementById('programSections').innerHTML = buildProgramSectionsHtml();
+  document.getElementById('programCustom').style.display='none';
+  document.getElementById('programCustom').value='';
+  addMeeting();
+  recalcRevenueCard(); recalcProgramSections();
+}
+function setProgram(name){
+  const sel = document.getElementById('programSelect');
+  if(!name){ sel.value=''; return; }
+  if(![...sel.options].some(o=>o.value===name||o.text===name)){
+    const o = document.createElement('option'); o.text = name; sel.insertBefore(o, sel.lastElementChild);
+  }
+  sel.value = name;
+}
+function openEntry(ref, mode){
+  current = ref ? budgets.find(b=>b.ref===ref) : null;
+  resetEntry();
+  setProgram(current ? current.program : '');
+  const view = document.getElementById('view-entry');
+  const ro = mode==='view';
+  view.classList.toggle('readonly', ro);
+  view.querySelectorAll('input,select,textarea').forEach(el=>el.disabled = ro);
+  const status = current ? current.status : 'Draft';
+  const badge = view.querySelector('.badge');
+  badge.textContent = status.toUpperCase();
+  badge.className = 'badge ' + status.toLowerCase();
+  view.querySelector('h1').textContent = current ? 'Budget Entry #' + current.ref : 'Budget Entry';
+  document.getElementById('roNote').textContent = ro ? `This budget was submitted ${current.date} and is read-only. Status: ${status}.` : '';
+  document.getElementById('view-list').hidden = true;
+  view.hidden = false;
+  document.body.classList.remove('nav-open');
+  window.scrollTo({top:0});
+}
+function showList(){
+  document.getElementById('view-entry').hidden = true;
+  document.getElementById('view-list').hidden = false;
+  renderLists();
+  window.scrollTo({top:0});
+}
+document.getElementById('newBudgetBtn').addEventListener('click', ()=>openEntry(null,'edit'));
+document.querySelector('#view-entry a.back').addEventListener('click', e=>{ e.preventDefault(); showList(); });
+
+/* entry footer: save / submit flow back to the list */
+function currentExpenses(){
+  const t = document.getElementById('programExpenses').textContent.replace(/[^0-9.\-]/g,'');
+  return parseFloat(t)||0;
+}
+function upsert(status){
+  const name = getProgramName() || 'Untitled program';
+  if(!current){ current = {ref: nextRef++}; budgets.unshift(current); }
+  Object.assign(current, {program:name, amount:currentExpenses(), status});
+  if(status==='Draft') current.saved = todayShort(); else current.date = today();
+}
+document.getElementById('saveDraftBtn').addEventListener('click', ()=>{
+  upsert('Draft'); setTimeout(showList, 700);
+});
+document.getElementById('submitBtn').addEventListener('click', ()=>{
+  if(!getProgramName() || !document.querySelectorAll('[data-meeting]').length) return; // entry's own validation toast covers this
+  upsert('Submitted'); setTimeout(showList, 700);
+});
+
+/* ===== Program Tracker ===== */
+const EXP_TPL = [
+  {gl:'40750',name:'Travel',lines:[['Travel','Airfare / Train',.18],['Travel','Hotel',.16],['Travel','Visa Fees',.03]]},
+  {gl:'40700',name:'Meetings',lines:[['Meetings','Food & Beverage',.17],['Meetings','Venue Rental',.10],['Meetings','A/V & Translation',.06]]},
+  {gl:'40800',name:'Program',lines:[['Program','Honorarium (Speakers/Moderator)',.06],['Program','Local Transportation',.05],['Program','Gifts',.02]]},
+  {gl:'40900',name:'Staffing / Professional Services',lines:[['Staffing','Interpreter',.09],['Staffing','Event Manager/Contractor',.08]]}
+];
+const REV_TPL = [
+  {gl:'30010',name:'Sponsorship',lines:[['Sponsorship','Level 1 \u2013 Platinum',.30],['Sponsorship','Level 2 \u2013 Gold',.18],['Sponsorship','General Sponsor',.07]]},
+  {gl:'30020',name:'Mission Fee',lines:[['Mission Fee','Members',.25],['Mission Fee','Non-Members',.10]]},
+  {gl:'30030',name:'Other Income',lines:[['Other Income','Grants',.10]]}
+];
+function rng(seed){ return ()=>{ seed=(seed*9301+49297)%233280; return seed/233280; }; }
+function buildGroups(tpl, total, withActuals, rand){
+  const all = tpl.flatMap(g=>g.lines); let used = 0, i = 0;
+  return tpl.map(g=>({gl:g.gl,name:g.name,lines:g.lines.map(([type,cat,pct])=>{
+    i++; let proj = i===all.length ? Math.round((total-used)*100)/100 : Math.round(total*pct);
+    used += proj;
+    const act = withActuals ? Math.round(proj*(0.78+rand()*0.42)) : null;
+    return {type,cat,proj,act};
+  })}));
+}
+function trackerData(b){
+  const rand = rng(b.ref*7+3);
+  const actuals = b.status==='Approved';
+  const year = (b.program.match(/\d{4}/)||[new Date().getFullYear()])[0];
+  return {year, exp: buildGroups(EXP_TPL, b.amount, actuals, rand),
+          rev: buildGroups(REV_TPL, Math.round(b.amount*1.3), actuals, rand), actuals};
+}
+const sum = (arr,k)=>arr.reduce((t,x)=>t+(x[k]||0),0);
+function vfmt(n){ return n===null ? '—' : (n<0?'-':'')+fmt(Math.abs(n)).replace('-',''); }
+function trkTable(groups, kind, year, actuals){
+  const isExp = kind==='exp';
+  const rows = groups.map(g=>{
+    const p = sum(g.lines,'proj'), a = actuals ? sum(g.lines,'act') : null;
+    const v = a===null ? null : (isExp ? p-a : a-p);
+    const tag = v===null ? '<span class="vtag na">Awaiting Actuals</span>'
+      : isExp ? (v<0 ? '<span class="vtag bad">Over Budget</span>' : '<span class="vtag good">Under Budget</span>')
+              : (v<0 ? '<span class="vtag bad">Target Not Met</span>' : '<span class="vtag good">Target Met</span>');
+    return `<tr class="grp"><td>${g.gl} - ${g.name}</td><td></td><td></td><td></td>
+      <td class="r">${fmt(p)}</td><td class="r">${a===null?'—':fmt(a)}</td>
+      <td class="r ${v<0?'neg':''}">${vfmt(v)}</td><td>${tag}</td></tr>` +
+      g.lines.map(l=>`<tr><td>${g.gl}</td><td>${year}</td><td>${l.type}</td><td>${l.cat}</td>
+        <td class="r">${fmt(l.proj)}</td><td class="r">${l.act===null?'—':fmt(l.act)}</td><td></td><td></td></tr>`).join('');
+  }).join('');
+  return `<div class="mp-table-wrap" style="box-shadow:none;border:1px solid #EDEDF0;"><table class="trk"><thead><tr>
+    <th>GL Account</th><th>Fiscal Year</th><th>${isExp?'Expense Type':'Revenue Source'}</th><th>Category</th>
+    <th class="r">Projected ${isExp?'Expense':'Revenue'}</th><th class="r">Actual ${isExp?'Expense':'Revenue'}</th><th class="r">Variance</th><th></th>
+  </tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+let trackerRef = null;
+function renderTracker(){
+  const subs = budgets.filter(b=>b.status!=='Draft');
+  const sel = document.getElementById('trkSelect');
+  if(!subs.length){ sel.innerHTML='<option>No submitted programs yet</option>'; document.getElementById('trkBody').innerHTML=''; document.getElementById('trkStatus').style.display='none'; return; }
+  if(!subs.some(b=>b.ref===trackerRef)) trackerRef = subs[0].ref;
+  sel.innerHTML = subs.map(b=>`<option value="${b.ref}">${b.program} (#${b.ref})</option>`).join('');
+  sel.value = trackerRef;
+  const b = subs.find(x=>x.ref===trackerRef), d = trackerData(b);
+  const st = document.getElementById('trkStatus');
+  st.style.display=''; st.textContent = b.status; st.className = 'status-tag ' + b.status.toLowerCase();
+  const ep = d.exp.reduce((t,g)=>t+sum(g.lines,'proj'),0), rp = d.rev.reduce((t,g)=>t+sum(g.lines,'proj'),0);
+  const ea = d.actuals ? d.exp.reduce((t,g)=>t+sum(g.lines,'act'),0) : null;
+  const ra = d.actuals ? d.rev.reduce((t,g)=>t+sum(g.lines,'act'),0) : null;
+  const dash = n => n===null ? '—' : fmt(n);
+  const save = ea===null ? null : ep-ea, gain = ra===null ? null : ra-rp;
+  document.getElementById('trkBody').innerHTML = `
+    ${d.actuals ? '' : `<p class="trk-note">Actuals are filled in once the budget is approved and the program runs. Until then you'll see projected figures only.</p>`}
+    <div class="trk-card"><h3>Expenses</h3><p class="mp-help">Projected expenses from the submitted budget, by GL account, next to what was actually spent.</p>${trkTable(d.exp,'exp',d.year,d.actuals)}</div>
+    <div class="trk-sum"><span>Budgeted:</span><span>${fmt(ep)}</span>
+      <span class="big">Actual:</span><span class="big">${dash(ea)}</span>
+      <span>${save!==null&&save<0?'Over Budget:':'Cost Savings:'}</span><span class="${save<0?'neg':''}">${save===null?'—':fmt(Math.abs(save))}</span></div>
+    <div class="trk-card"><h3>Revenue</h3><p class="mp-help">Projected sponsorship, mission fee, and other income next to what actually came in.</p>${trkTable(d.rev,'rev',d.year,d.actuals)}</div>
+    <div class="trk-sum"><span>Projected:</span><span>${fmt(rp)}</span>
+      <span class="big">Actual:</span><span class="big">${dash(ra)}</span>
+      <span>${gain!==null&&gain>=0?'Revenue Gain:':'Loss of Revenue:'}</span><span class="${gain<0?'neg':''}">${gain===null?'—':fmt(Math.abs(gain))}</span></div>
+    <div class="net-box">
+      <div class="ln"><span>Actual Revenue:</span><span>${dash(ra)}</span></div>
+      <div class="ln"><span>&minus;&nbsp; Actual Expenses:</span><span>${dash(ea)}</span></div>
+      <hr>
+      <div class="ln total"><span>Actual Program Net:</span><span>${ra===null?'—':fmt(ra-ea)}</span></div>
+      <div class="ln proj"><span>Projected Program Net:</span><span>${fmt(rp-ep)}</span></div>
+    </div>`;
+}
+document.getElementById('trkSelect').addEventListener('change', e=>{ trackerRef = +e.target.value; renderTracker(); });
+function openTracker(ref){
+  trackerRef = ref;
+  if(document.getElementById('view-list').hidden) showList();
+  switchTab('tracker'); window.scrollTo({top:0});
+}
+
+renderLists();
+</script>
+
+</body>
+</html>
