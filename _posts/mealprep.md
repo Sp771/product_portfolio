@@ -20,7 +20,7 @@ The Event Catalog and Event Manager module, built within a Member Portal, allows
 ## My Role
 * **🧠 Product Owner of Member Portal:** Led refinements with the development team, gathered user research from clients, and coordinated stakeholder calls to shape the product’s functionality.
 
-* **🧠 Client Demo Lead:** Conducted live product demos for clients to showcase the features and functionalities of the product, ensuring they understood how to navigate the system and maximize its benefits.incididunt ut labore et dolore magna aliqua.
+* **🧠 Client Demo Lead:** Conducted live product demos for clients to showcase the features and functionalities of the product, ensuring they understood how to navigate the system and maximize its benefits.
 
 * **🧠 Product Design Architect:** Designed the event catalog and event management features within Figma, creating an intuitive interface for members to view, purchase, and track events.
 

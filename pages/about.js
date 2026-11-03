@@ -37,6 +37,9 @@ const About = () => {
   I started my career studying finance, but found my true calling in product management after a twist of fate — my boss left the company before I even started, so I ended up on a random team with a brilliant product owner who introduced me to the exciting world of tech. From there, I grew my career in product management, where I’ve been lucky to bring innovative solutions to life.
 </p>
 <p className="text-lg block text-slate-500 mb-4">
+  Today I’m the Product Owner of MemberPlex at Aura Innovative Technology, a member portal platform for not-for-profits. I own the roadmap and backlog, lead UX/UI design in Figma, and run QA and releases. Lately my favorite part of the job has been bringing AI into how our team works — from AI-assisted backlog reviews and QA workflows to release and standup automations that give everyone more time to focus on building great product.
+</p>
+<p className="text-lg block text-slate-500 mb-4">
 When I’m not shaping the future of products, you’ll find me planning my next adventure or spending quality time with Pepper. I believe in constantly learning and growing, and I’m excited for the next chapter in my career and life, wherever it may take me!
 </p>
                       </div>

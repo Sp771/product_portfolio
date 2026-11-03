@@ -30,7 +30,7 @@ export default function Post({ post, morePosts, preview }) {
                 <Container>
                   <Head>
                     <title>
-                      {post.title} | Lisa Orr's product portfolio and blog
+                      {post.title} | Sydney Pittman's Product Portfolio
                     </title>
                     <meta property="og:image" content={post.ogImage.url} />
                   </Head>

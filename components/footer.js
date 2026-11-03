@@ -7,17 +7,16 @@ export default function Footer() {
       <Container>
         <div className="py-12">
           <div className="flex justify-center items-center">
-            <a className="mx-4" href="https://github.com/">
+            <a className="mx-4" href="https://github.com/Sp771">
                 <img alt="github logo" src={"/icons/github-fill.svg"} height={45} width={45} />
                 <span className="invisible">Github</span>
             </a>
             <a className="mx-4"
-              href="mailto:annieapple@gmail.om">
-              <img alt="linkedin logo" src={"/icons/mail-fill.svg"} height={45} width={45} />
+              href="mailto:sydney.m.pittman@gmail.com">
+              <img alt="email icon" src={"/icons/mail-fill.svg"} height={45} width={45} />
               <span className="invisible">Email</span>
             </a>
-            <a className="mx-4" href="https://www.linkedin.com/in/sydneympittman/
-            // ">
+            <a className="mx-4" href="https://www.linkedin.com/in/sydneympittman/">
                 <img alt="linkedin logo" src={"/icons/linkedin-box-fill.svg"} height={45} width={45} />
                 <span className="invisible">LinkedIn</span>
             </a>

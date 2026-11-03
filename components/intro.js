@@ -13,14 +13,15 @@ export default function Intro() {
           <h1 className="text-6xl md:text-7xl font-bold leading-tight" style={{ color: '#4056a1' }}>
             Hi, I'm Sydney Pittman<br />
             <span className="text-4xl md:text-5xl font-semibold" style={{ color: '#94b143' }}>
-              Product Leader
+              AI-Native Product Leader
             </span>
           </h1>
 
           <p className="text-lg block text-slate-500 mt-4">
-            Results-driven Product Manager with expertise in Agile, product design, and mentorship. 
-            Focused on innovative, customer-centric solutions, team growth, and data-driven strategies 
-            to boost engagement and performance. Thrives in fast-paced, trend-driven environments.
+            AI-native Product Manager with 6 years of experience in Agile, product design, and
+            cross-functional execution. I build GenAI into both the product and the process, from
+            AI-powered features to AI-assisted backlog refinement, QA, and release automation that
+            help teams ship faster with less manual work.
           </p>
 
           {/* Resume Button with hover text change */}

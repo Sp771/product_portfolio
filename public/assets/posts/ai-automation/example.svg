@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 640" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1600" height="640" fill="#f2ecd8"/>
+  <text x="800" y="70" text-anchor="middle" font-size="36" font-weight="700" fill="#4056a1">Where AI fits in the MemberPlex delivery cycle</text>
+  <g font-size="26">
+    <g transform="translate(60,130)">
+      <rect width="330" height="400" rx="20" fill="#fff" stroke="#4056a1" stroke-width="4"/>
+      <rect width="330" height="70" rx="20" fill="#4056a1"/><rect y="40" width="330" height="30" fill="#4056a1"/>
+      <text x="165" y="47" text-anchor="middle" fill="#fff" font-weight="700" font-size="28">1. Backlog</text>
+      <text x="30" y="125" fill="#334">AI-assisted ticket</text><text x="30" y="160" fill="#334">reviews</text>
+      <text x="30" y="225" fill="#334">Flag requirement</text><text x="30" y="260" fill="#334">gaps</text>
+      <text x="30" y="325" fill="#334">Sharper prioritization</text>
+    </g>
+    <g transform="translate(450,130)">
+      <rect width="330" height="400" rx="20" fill="#fff" stroke="#4056a1" stroke-width="4"/>
+      <rect width="330" height="70" rx="20" fill="#7a8fd0"/><rect y="40" width="330" height="30" fill="#7a8fd0"/>
+      <text x="165" y="47" text-anchor="middle" fill="#fff" font-weight="700" font-size="28">2. Standups</text>
+      <text x="30" y="125" fill="#334">Developer workload</text><text x="30" y="160" fill="#334">visibility</text>
+      <text x="30" y="225" fill="#334">Daily update and</text><text x="30" y="260" fill="#334">priority tracking</text>
+      <text x="30" y="325" fill="#334">Project progress</text>
+    </g>
+    <g transform="translate(840,130)">
+      <rect width="330" height="400" rx="20" fill="#fff" stroke="#4056a1" stroke-width="4"/>
+      <rect width="330" height="70" rx="20" fill="#d64e00"/><rect y="40" width="330" height="30" fill="#d64e00"/>
+      <text x="165" y="47" text-anchor="middle" fill="#fff" font-weight="700" font-size="28">3. QA</text>
+      <text x="30" y="125" fill="#334">AI-driven test</text><text x="30" y="160" fill="#334">preparation</text>
+      <text x="30" y="225" fill="#334">Less repetitive</text><text x="30" y="260" fill="#334">manual testing</text>
+      <text x="30" y="325" fill="#334">Faster turnaround</text>
+    </g>
+    <g transform="translate(1230,130)">
+      <rect width="310" height="400" rx="20" fill="#fff" stroke="#4056a1" stroke-width="4"/>
+      <rect width="310" height="70" rx="20" fill="#94b143"/><rect y="40" width="310" height="30" fill="#94b143"/>
+      <text x="155" y="47" text-anchor="middle" fill="#fff" font-weight="700" font-size="28">4. Release</text>
+      <text x="30" y="125" fill="#334">Consistent</text><text x="30" y="160" fill="#334">deployments</text>
+      <text x="30" y="225" fill="#334">Release tracking</text>
+      <text x="30" y="290" fill="#334">Clear production-</text><text x="30" y="325" fill="#334">readiness comms</text>
+    </g>
+  </g>
+  <g fill="#4056a1"><path d="M398,330l40,0 -14,-14m14,14l-14,14" stroke="#4056a1" stroke-width="6" fill="none"/><path d="M788,330l40,0 -14,-14m14,14l-14,14" stroke="#4056a1" stroke-width="6" fill="none"/><path d="M1178,330l40,0 -14,-14m14,14l-14,14" stroke="#4056a1" stroke-width="6" fill="none"/></g>
+  <text x="800" y="595" text-anchor="middle" font-size="24" fill="#4056a1" font-style="italic">Supported across the cycle by an Amazon Bedrock initiative for feedback summarization and RFP responses</text>
+</svg>
