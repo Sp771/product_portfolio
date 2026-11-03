@@ -17,6 +17,24 @@ The Reimbursement Portal, built within a Member Portal, simplifies the expense r
 
 ![Example product screencap](/assets/posts/abtesting/example.svg)
 
+### In the product
+
+Members choose how they want to be reimbursed and confirm their billing address.
+
+![Reimbursement Profile with check or ACH options](/assets/posts/abtesting/screen-reimbursement-options.jpg)
+
+Expense report delegation lets members authorize someone else to manage expense reports for them.
+
+![Expense Report Delegation tab with access requests](/assets/posts/abtesting/screen-delegation.jpg)
+
+Draft and submitted expense reports, all in one place.
+
+![My Reimbursements list with draft and submitted reports](/assets/posts/abtesting/screen-my-reimbursements.jpg)
+
+Creating a new expense report, with a purpose and one or more expense items.
+
+![New Expense Report form](/assets/posts/abtesting/screen-new-expense-report.jpg)
+
 ---
  
 ## My Role

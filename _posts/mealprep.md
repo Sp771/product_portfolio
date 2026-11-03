@@ -15,6 +15,16 @@ The Event Catalog and Event Manager module, built within a Member Portal, allows
 
 ![Example product screencap](/assets/posts/mealprep/example.svg)
 
+### In the product
+
+The Event Catalog, where members search and filter upcoming events by date, type, credit and location.
+
+![Event Catalog with search, filters and event cards](/assets/posts/mealprep/screen-catalog.jpg)
+
+The event detail page, with date, time, location, pricing and group registration.
+
+![Event detail page with pricing and Start Group Registration button](/assets/posts/mealprep/screen-event-detail.jpg)
+
 ---
  
 ## My Role

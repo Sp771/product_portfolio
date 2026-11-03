@@ -36,3 +36,11 @@
 .markdown a {
   @apply underline text-sky-400 hover:text-sky-800;
 }
+
+/* Product screenshots: use the full content width so UI text stays readable */
+.markdown img[src$=".jpg"] {
+  max-width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+}
