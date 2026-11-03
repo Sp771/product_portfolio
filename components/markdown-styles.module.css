@@ -34,7 +34,7 @@
 }
 
 .markdown a {
-  @apply underline text-sky-400 hover:text-sky-800;
+  @apply underline text-ink hover:text-flame;
 }
 
 /* Product screenshots: use the full content width so UI text stays readable */
