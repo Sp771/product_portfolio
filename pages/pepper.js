@@ -18,19 +18,19 @@ const Pepper = () => {
 
       <Container>
          {/* Return Link */}
-         <a href="/about" className="text-sm text-[#4056a1] flex items-center underline mb-4">
+         <a href="/about" className="text-sm text-ink flex items-center underline mb-4">
           {/* Back arrow icon */}
           <span className="mr-2">←</span> Return to Pepper's Owner's About Page
         </a>
         <div className="pt-16 pb-16">
           {/* Page Title */}
-          <h1 className="text-7xl font-bold text-[#D64E00] mb-4">Pepper Pittman</h1>
+          <h1 className="text-7xl font-bold text-orange mb-4">Pepper Pittman</h1>
 
           {/* Subtitle */}
           <h2 className="text-xl font-semibold text-slate-500 mb-4">Small Legs, Big Adventures</h2>
 
           {/* Line */}
-          <hr className="border-t-2 border-[#4056a1] mb-8 w-full" />
+          <hr className="border-t-2 border-orange mb-8 w-full" />
 
           {/* Swiper Carousel for Images */}
           <Swiper

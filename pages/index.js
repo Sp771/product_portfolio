@@ -49,7 +49,7 @@ export default function Index({ allPosts }) {
                       <h3 className="font-display font-extrabold text-2xl text-ink group-hover:text-brand">{p.title}</h3>
                       <p className="text-slate-600">{p.tagline}</p>
                     </div>
-                    <span className="flex-none rounded-full bg-lime text-ink text-sm font-bold px-4 py-2 group-hover:bg-ink group-hover:text-white transition-colors duration-150">
+                    <span className="flex-none rounded-full bg-cream text-ink text-sm font-bold px-4 py-2 group-hover:bg-ink group-hover:text-white transition-colors duration-150">
                       Try it live
                     </span>
                   </div>

@@ -52,8 +52,8 @@ When I’m not shaping the future of products, you’ll find me planning my next
     <div className="flex items-center justify-center md:justify-start">
       {/* Title */}
       <div>
-        <h2 className="text-3xl font-bold text-center md:text-right text-[#4056a1] mb-0 md:mr-8">
-          <a href="/pepper" className="hover:text-[#d79922] transition duration-200">
+        <h2 className="text-3xl font-bold text-center md:text-right text-ink mb-0 md:mr-8">
+          <a href="/pepper" className="hover:text-orange transition duration-200">
             Pepper Pittman: Small Legs, Big Adventures
           </a>
         </h2>

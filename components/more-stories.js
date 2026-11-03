@@ -33,7 +33,7 @@ export default function MoreStories({ posts }) {
       </p>
         {/* Adding a line under the paragraph */}
         {isProjectsPage && (
-        <hr className="border-t-2 border-lime mb-8 mx-auto w-full" />
+        <hr className="border-t-2 border-orange mb-8 mx-auto w-full" />
       )}
 
       <div className="mb-8">

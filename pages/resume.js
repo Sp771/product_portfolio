@@ -31,7 +31,7 @@ export default function Resume() {
         <Container>
           <div className="pt-12 pb-14 lg:pt-16 lg:pb-16 flex flex-wrap items-end justify-between gap-8">
             <div className="max-w-3xl">
-              <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.02] mb-3">Resume</h1>
+              <h1 className="text-cream font-display font-extrabold text-5xl md:text-7xl leading-[1.02] mb-3">Resume</h1>
               <p className="text-xl text-white/80 mb-4">{R.title} · {R.location}</p>
               <p className="text-white/80 flex flex-wrap gap-x-5 gap-y-1">
                 <a href={`mailto:${R.email}`} className="underline underline-offset-4 hover:text-white">{R.email}</a>
@@ -41,7 +41,7 @@ export default function Resume() {
             <a
               href={R.pdf}
               download="Sydney_Pittman_Resume.pdf"
-              className="rounded-full bg-lime text-ink font-bold text-lg px-8 py-4 hover:bg-white transition-colors duration-150"
+              className="rounded-full bg-cream text-ink font-bold text-lg px-8 py-4 hover:bg-white transition-colors duration-150"
             >
               Download PDF
             </a>
@@ -59,10 +59,10 @@ export default function Resume() {
 
             <section>
               <h2 className="font-display font-extrabold text-ink text-3xl mb-8">Experience</h2>
-              <ol className="border-l-2 border-mist">
+              <ol className="border-l-2 border-cream">
                 {R.experience.map((job) => (
                   <li key={job.role + job.company} className="relative pl-8 pb-12 last:pb-0">
-                    <span aria-hidden="true" className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-lime ring-4 ring-white" />
+                    <span aria-hidden="true" className="absolute -left-[9px] top-2 h-4 w-4 rounded-full bg-sky ring-4 ring-white" />
                     <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 mb-1">
                       <h3 className="font-display font-extrabold text-ink text-2xl">{job.role}</h3>
                       <span className="text-slate-500 font-medium">{job.dates}</span>

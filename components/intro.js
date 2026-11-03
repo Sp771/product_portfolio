@@ -24,7 +24,7 @@ export default function Intro() {
                 <p className="text-lg text-white/80">Hi, I’m Sydney Pittman.</p>
               </div>
 
-              <h1 className="font-display font-extrabold text-5xl md:text-6xl xl:text-7xl leading-[1.02] mb-6">
+              <h1 className="text-cream font-display font-extrabold text-5xl md:text-6xl xl:text-7xl leading-[1.02] mb-6">
                 Product leader with an AI-first mindset.
               </h1>
 
@@ -39,7 +39,7 @@ export default function Intro() {
               <div className="flex flex-wrap gap-4">
                 <a
                   href="/prototypes"
-                  className="rounded-full bg-lime text-ink font-bold text-lg px-8 py-4 hover:bg-white transition-colors duration-150"
+                  className="rounded-full bg-cream text-ink font-bold text-lg px-8 py-4 hover:bg-white transition-colors duration-150"
                 >
                   Try my AI prototypes
                 </a>

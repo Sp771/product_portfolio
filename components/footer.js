@@ -7,10 +7,6 @@ export default function Footer() {
       <Container>
         <div className="py-12">
           <div className="flex justify-center items-center">
-            <a className="mx-4" href="https://github.com/Sp771">
-                <img alt="github logo" src={"/icons/github-fill.svg"} height={40} width={40} className="invert opacity-80 hover:opacity-100 transition-opacity" />
-                <span className="invisible">Github</span>
-            </a>
             <a className="mx-4"
               href="mailto:sydney.m.pittman@gmail.com">
               <img alt="email icon" src={"/icons/mail-fill.svg"} height={40} width={40} className="invert opacity-80 hover:opacity-100 transition-opacity" />

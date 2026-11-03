@@ -12,8 +12,8 @@ const ITEMS = [
 function classesFor(item, active) {
   if (item.kind === 'primary') {
     return active
-      ? 'rounded-full bg-white text-ink ring-4 ring-lime px-4 py-2 font-bold'
-      : 'rounded-full bg-lime text-ink px-4 py-2 font-bold hover:bg-white'
+      ? 'rounded-full bg-white text-ink ring-4 ring-cream px-4 py-2 font-bold'
+      : 'rounded-full bg-cream text-ink px-4 py-2 font-bold hover:bg-white'
   }
   if (item.kind === 'outline') {
     return active
@@ -21,7 +21,7 @@ function classesFor(item, active) {
       : 'rounded-full border-2 border-white/70 text-white px-4 py-1.5 font-bold hover:bg-white hover:text-ink'
   }
   return active
-    ? 'px-3 py-2 text-white font-bold underline decoration-lime decoration-4 underline-offset-[10px]'
+    ? 'px-3 py-2 text-white font-bold underline decoration-cream decoration-4 underline-offset-[10px]'
     : 'px-3 py-2 text-white/80 hover:text-white'
 }
 

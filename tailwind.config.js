@@ -3,12 +3,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: '#16205C',
-        brand: '#4056A1',
-        flame: '#C24600',
-        lime: '#B8D432',
-        moss: '#94B143',
-        mist: '#F1F3FB',
+        ink: '#7D2027',
+        brand: '#673C34',
+        flame: '#BF4A21',
+        orange: '#CF5527',
+        cream: '#FAE3B1',
+        olive: '#998731',
+        sky: '#5FA8C2',
+        skytint: '#DCEEF4',
+        mist: '#FBF0D6',
         'text-color': '#21243D',
         'accent-1': '#FF6464',
         'accent-2': '#EAEAEA',

@@ -8,7 +8,7 @@ function Tag({ children, ai }) {
   return (
     <span
       className={`inline-block text-sm font-bold rounded-full px-3 py-1 mr-2 mb-2 ${
-        ai ? 'bg-lime text-ink' : 'bg-mist text-brand'
+        ai ? 'bg-cream text-ink' : 'bg-skytint text-ink'
       }`}
     >
       {children}
@@ -89,7 +89,7 @@ export default function Prototypes() {
       <section className="bg-ink text-white">
         <Container>
           <div className="pt-12 pb-16 lg:pt-16 lg:pb-20 max-w-3xl">
-            <h1 className="font-display font-extrabold text-5xl md:text-7xl leading-[1.02] mb-6">AI prototypes</h1>
+            <h1 className="text-cream font-display font-extrabold text-5xl md:text-7xl leading-[1.02] mb-6">AI prototypes</h1>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed">
               Instead of static mockups, I use Claude to turn requirements into working, clickable prototypes
               that clients, stakeholders and developers can use before any production code is written. It lets

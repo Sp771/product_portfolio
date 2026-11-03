@@ -8,7 +8,7 @@
     letter-spacing: -0.02em;
   }
   a:focus-visible, button:focus-visible {
-    outline: 3px solid #B8D432;
+    outline: 3px solid #5FA8C2;
     outline-offset: 3px;
   }
 }
