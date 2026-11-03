@@ -13,16 +13,16 @@ export default function MoreStories({ posts }) {
   return (
     <section className={isProjectsPage ? "text-center" : ""}> {/* Centering content for projects page */}
       <h2
-        className={`mb-4 font-bold leading-tight ${
+        className={`mb-4 font-extrabold leading-tight ${
           isProjectsPage ? "text-7xl" : "text-4xl md:text-5xl"
         }`}
       >
         {isProjectsPage ? (
-          <span className="text-[#4056a1]">More Projects</span> // Not clickable
+          <span className="text-ink">More Projects</span> // Not clickable
         ) : (
           <a
             href="/projects"
-            className="p-4 block text-[#4056a1] hover:text-[#94B143] transition duration-200"
+            className="block text-ink hover:text-brand transition duration-200"
           >
             More Projects
           </a>
@@ -33,7 +33,7 @@ export default function MoreStories({ posts }) {
       </p>
         {/* Adding a line under the paragraph */}
         {isProjectsPage && (
-        <hr className="border-t-2 border-[#94B143] mb-8 mx-auto w-full" />
+        <hr className="border-t-2 border-lime mb-8 mx-auto w-full" />
       )}
 
       <div className="mb-8">

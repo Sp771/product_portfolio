@@ -1,52 +1,78 @@
-import Image from 'next/image';
-import Head from 'next/head';
+import Head from 'next/head'
+import Container from './container'
+import WindowFrame from './window-frame'
 
 export default function Intro() {
   return (
     <>
       <Head>
-        <title>Sydney Pittman | Product Leader</title>
-      </Head> {/* Corrected closing tag */}
-      
-      <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
-        <div className="md:pr-8">
-          <h1 className="text-6xl md:text-7xl font-bold leading-tight" style={{ color: '#4056a1' }}>
-            Hi, I'm Sydney Pittman<br />
-            <span className="text-4xl md:text-5xl font-semibold" style={{ color: '#94b143' }}>
-              AI-Native Product Leader
-            </span>
-          </h1>
+        <title>Sydney Pittman | AI-Native Product Leader</title>
+      </Head>
 
-          <p className="text-lg block text-slate-500 mt-4">
-            AI-native Product Manager with 6 years of experience in Agile, product design, and
-            cross-functional execution. I build GenAI into both the product and the process, from
-            AI-powered features to AI-assisted backlog refinement, QA, and release automation that
-            help teams ship faster with less manual work.
-          </p>
+      <section className="bg-ink text-white overflow-hidden">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-10 pb-20 lg:pt-16 lg:pb-28">
+            <div className="lg:col-span-6">
+              <div className="flex items-center gap-3 mb-6">
+                <img
+                  src="/assets/posts/authors/annie.svg"
+                  alt="Sydney Pittman"
+                  width={56}
+                  height={56}
+                  className="h-14 w-14 rounded-full"
+                />
+                <p className="text-lg text-white/80">Hi, I’m Sydney, an AI-native product leader.</p>
+              </div>
 
-          {/* Resume Button with hover text change */}
-          <div className="group inline-block mt-6">
-            <a
-              href="/assets/resume/Resume.pdf"
-              className="bg-[#D64E00] border border-[#D64E00] text-white font-bold py-3 px-12 lg:px-8 
-                         duration-200 transition-colors inline-block hover:bg-white hover:text-[#D64E00]"
-            >
-              <span className="group-hover:hidden">Download Resume</span>
-              <span className="hidden group-hover:inline">Click me… you know you want to.</span>
+              <h1 className="font-display font-extrabold text-5xl md:text-6xl xl:text-7xl leading-[1.02] mb-6">
+                I turn product ideas into working AI prototypes.
+              </h1>
+
+              <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-9 max-w-xl">
+                Product Owner of MemberPlex with 6 years in Agile product development. I build GenAI into
+                both the product and the process, and give teams something they can click through before
+                any production code is written.
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="/prototypes"
+                  className="rounded-full bg-lime text-ink font-bold text-lg px-8 py-4 hover:bg-white transition-colors duration-150"
+                >
+                  Try my AI prototypes
+                </a>
+                <a
+                  href="/assets/resume/Resume.pdf"
+                  className="group rounded-full border-2 border-white/70 text-white font-bold text-lg px-8 py-[14px] hover:bg-white hover:text-ink transition-colors duration-150"
+                >
+                  <span className="group-hover:hidden">Download resume</span>
+                  <span className="hidden group-hover:inline">Click me… you know you want to.</span>
+                </a>
+              </div>
+            </div>
+
+            <a href="/prototypes" aria-label="See all AI prototypes" className="lg:col-span-6 block">
+              <div className="fan relative mx-auto max-w-xl lg:max-w-none h-[300px] sm:h-[380px] lg:h-[440px]">
+                <WindowFrame
+                  src="/assets/prototypes/impersonation-mode.jpg"
+                  alt=""
+                  className="absolute w-[72%] left-0 top-6 -rotate-6 opacity-90"
+                />
+                <WindowFrame
+                  src="/assets/prototypes/event-pathfinder.jpg"
+                  alt=""
+                  className="absolute w-[72%] right-0 top-0 rotate-[5deg] opacity-95"
+                />
+                <WindowFrame
+                  src="/assets/prototypes/tender-messages.jpg"
+                  alt="Tender Connect prototype with the Tender Coach AI assistant"
+                  className="absolute w-[80%] left-[10%] top-[22%] -rotate-1"
+                />
+              </div>
             </a>
           </div>
-        </div>
-
-        {/* Image */}
-        <Image 
-          title="lisafeets" 
-          src="/assets/posts/authors/annie.svg" 
-          height={700} 
-          width={700} 
-          alt="Author Image"
-          className="mt-6 md:mt-0"
-        />
+        </Container>
       </section>
     </>
-  );
+  )
 }

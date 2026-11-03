@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1, h2, h3 {
+    font-family: "Bricolage Grotesque", Heebo, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 3px solid #B8D432;
+    outline-offset: 3px;
+  }
+}
+
+/* Hero: prototype windows fan out once on load */
+@keyframes fan-in {
+  from { opacity: 0; transform: translateY(24px) rotate(0deg); }
+}
+.fan > * { animation: fan-in 700ms cubic-bezier(.2,.7,.2,1) both; }
+.fan > *:nth-child(2) { animation-delay: 120ms; }
+.fan > *:nth-child(3) { animation-delay: 240ms; }
+@media (prefers-reduced-motion: reduce) {
+  .fan > * { animation: none; }
+}

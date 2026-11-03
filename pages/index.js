@@ -3,9 +3,10 @@ import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
+import WindowFrame from '../components/window-frame'
 import { getAllPosts } from '../lib/api'
+import PROTOTYPES from '../lib/prototypes'
 import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
 
 export default function Index({ allPosts }) {
   const heroPost = allPosts[0]
@@ -14,13 +15,53 @@ export default function Index({ allPosts }) {
     <>
       <Layout>
         <Head>
-          <title>Sydney Pittman's Product Portfolio</title>
+          <title>Sydney Pittman | AI-Native Product Leader</title>
         </Head>
-        <Container>
-          <Intro />
-        </Container>
-        <div className="pt-16 pb-16" style={{ backgroundColor: '#f2ecd8', color: '#D64E00' }}>
+        <Intro />
+
+        <section className="py-20" aria-labelledby="prototypes-heading">
           <Container>
+            <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
+              <div className="max-w-2xl">
+                <h2 id="prototypes-heading" className="font-display font-extrabold text-ink text-4xl md:text-6xl leading-tight mb-3">
+                  AI prototypes you can click
+                </h2>
+                <p className="text-lg text-slate-600">
+                  Working prototypes I built with Claude, from an AI networking coach to a conference
+                  session planner. Each one opens in a new tab so you can try it yourself.
+                </p>
+              </div>
+              <a href="/prototypes" className="rounded-full bg-flame text-white font-bold px-7 py-3 hover:bg-ink transition-colors duration-150">
+                See how I built them
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-14">
+              {PROTOTYPES.map((p) => (
+                <a key={p.slug} href={p.live} target="_blank" rel="noopener noreferrer" className="group block">
+                  <WindowFrame
+                    src={p.image}
+                    alt={`${p.title} prototype`}
+                    className="transition-transform duration-200 group-hover:-translate-y-1"
+                  />
+                  <div className="mt-5 flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-display font-extrabold text-2xl text-ink group-hover:text-brand">{p.title}</h3>
+                      <p className="text-slate-600">{p.tagline}</p>
+                    </div>
+                    <span className="flex-none rounded-full bg-lime text-ink text-sm font-bold px-4 py-2 group-hover:bg-ink group-hover:text-white transition-colors duration-150">
+                      Try it live
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        <div className="bg-mist py-16">
+          <Container>
+            <h2 className="font-display font-extrabold text-ink text-2xl mb-8">Featured project</h2>
             {heroPost && (
               <HeroPost
                 title={heroPost.title}
@@ -31,44 +72,13 @@ export default function Index({ allPosts }) {
                 excerpt={heroPost.excerpt}
               />
             )}
-            </Container>
+          </Container>
+        </div>
+        <Container>
+          <div className="mt-16">
+            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
           </div>
-          <Container>
-            <section className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center pt-16">
-              <div className="md:col-span-2">
-                <h2 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
-                  <a href="/prototypes" className="text-[#4056a1] hover:text-[#94B143] transition duration-200">
-                    AI Prototypes
-                  </a>
-                </h2>
-                <p className="text-lg text-slate-500 mb-6">
-                  Working, clickable prototypes I built with Claude, from an AI networking coach to a
-                  conference session planner. Open any of them and try them yourself.
-                </p>
-                <a
-                  href="/prototypes"
-                  className="bg-[#D64E00] border border-[#D64E00] text-white font-bold py-3 px-8 inline-block duration-200 transition-colors hover:bg-white hover:text-[#D64E00]"
-                >
-                  See the prototypes
-                </a>
-              </div>
-              <a href="/prototypes" aria-label="See the AI prototypes" className="block">
-                <img
-                  src="/assets/prototypes/tender-messages.jpg"
-                  alt="Tender Connect prototype with the Tender Coach AI assistant"
-                  width={1200}
-                  height={750}
-                  className="w-full h-auto rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-200"
-                  loading="lazy"
-                />
-              </a>
-            </section>
-          </Container>
-          <Container>
-            <div className="md:mt-16">
-              {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-            </div>
-          </Container>
+        </Container>
       </Layout>
     </>
   )

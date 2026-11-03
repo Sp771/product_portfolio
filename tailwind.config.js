@@ -3,6 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        ink: '#16205C',
+        brand: '#4056A1',
+        flame: '#C24600',
+        lime: '#B8D432',
+        moss: '#94B143',
+        mist: '#F1F3FB',
         'text-color': '#21243D',
         'accent-1': '#FF6464',
         'accent-2': '#EAEAEA',
@@ -15,7 +21,7 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['Heebo', 'system-ui'],
-        'display': ['Heebo'],
+        'display': ['"Bricolage Grotesque"', 'Heebo', 'system-ui'],
         'body': ['Heebo'],
       },
       letterSpacing: {

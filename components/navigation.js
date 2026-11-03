@@ -1,58 +1,30 @@
 import Container from './container'
-import cn from 'classnames'
-import { EXAMPLE_PATH } from '../lib/constants'
+
+const link = 'px-3 py-2 text-white/85 hover:text-white transition-colors duration-150'
 
 export default function Navigation() {
   return (
-    <>
+    <header className="bg-ink">
       <Container>
-          {
-            <>
-                <ul className="flex justify-end">
-                <li>
-                        <a
-                        href={`/`}
-                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
-                        >
-                        Home
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href={`/projects`}
-                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
-                        >
-                        Projects
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href={`/prototypes`}
-                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
-                        >
-                        AI Prototypes
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href={`/about`}
-                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
-                        >
-                        About
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                        href={`https://www.linkedin.com/in/sydneympittman/`}
-                        className="p-4 block text-[#f13c1f] transition duration-200 hover:scale-150 hover:font-bold duration-200 transition-transform"
-                        >
-                        LinkedIn
-                        </a>
-                    </li>
-                </ul>
-            </>
-          }
+        <nav className="flex flex-wrap items-center justify-between gap-y-2 py-4" aria-label="Main">
+          <a href="/" className="font-display text-2xl font-extrabold text-white tracking-tight">
+            Sydney Pittman
+          </a>
+          <ul className="flex flex-wrap items-center gap-1 text-base font-medium">
+            <li>
+              <a
+                href="/prototypes"
+                className="ml-1 inline-block rounded-full bg-lime px-4 py-2 font-bold text-ink hover:bg-white transition-colors duration-150"
+              >
+                AI Prototypes
+              </a>
+            </li>
+            <li><a href="/projects" className={link}>Projects</a></li>
+            <li><a href="/about" className={link}>About</a></li>
+            <li><a href="https://www.linkedin.com/in/sydneympittman/" className={link}>LinkedIn</a></li>
+          </ul>
+        </nav>
       </Container>
-    </>
+    </header>
   )
 }

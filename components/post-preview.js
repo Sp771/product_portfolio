@@ -26,7 +26,7 @@ export default function PostPreview({
         <div className="md:col-span-2">
           <h3 className="text-2xl mb-3 leading-snug font-bold">
             <Link href={`/posts/${slug}`}>
-              <a className="hover:underline" style={{ color: '#D64E00' }}>
+              <a className="font-display font-extrabold text-ink hover:text-brand">
                 {title}
               </a>
             </Link>

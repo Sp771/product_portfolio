@@ -12,7 +12,7 @@ export default function HeroPost({
   slug,
 }) {
   return (
-    <section className="md:grid grid-cols-2">
+    <section className="md:grid grid-cols-2 items-center">
       <div className="md:mr-8">
         <CoverImage
           title={title}
@@ -24,9 +24,9 @@ export default function HeroPost({
       </div>
       <div>
         <div>
-          <h3 className="mb-3 text-4xl lg:text-6xl leading-tight font-bold">
+          <h3 className="mb-3 text-4xl lg:text-6xl leading-tight font-extrabold text-ink">
             <Link href={`/posts/${slug}`}>
-              <a className="hover:underline">{title}</a>
+              <a className="hover:text-brand">{title}</a>
             </Link>
           </h3>
           <div className="text-md mb-4 text-slate-500">
